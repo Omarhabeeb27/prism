@@ -58,7 +58,7 @@ Prism does **not** touch business logic, doctypes' core fields, permissions, or 
 
 **Login page** themed independent of Desk — this is the "Full Gradient" login layout, one of five selectable structural styles:
 
-![Login page with the Full Gradient style](<img width="1754" height="835" alt="image" src="https://github.com/user-attachments/assets/5a9c9366-fa62-4c88-bbd2-c39afe912609" />
+(<img width="1754" height="835" alt="image" src="https://github.com/user-attachments/assets/5a9c9366-fa62-4c88-bbd2-c39afe912609" />
 
 ## Features
 
