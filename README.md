@@ -56,9 +56,9 @@ Prism does **not** touch business logic, doctypes' core fields, permissions, or 
 
 ![Desk home themed with the Glass Aurora dark preset](screenshots/07-dark-theme-glass-aurora.png)
 
-**Login page** themed independent of Desk — this is the "Full Gradient" login layout, one of five selectable structural styles:
+**Login page** themed independent of Desk — this is the default "Centered Card" login layout, one of five selectable structural styles:
 
-<img width="1754" height="835" alt="image" src="https://github.com/user-attachments/assets/5a9c9366-fa62-4c88-bbd2-c39afe912609" />
+<img width="1754" height="835" alt="Login page with the Centered Card style" src="https://github.com/user-attachments/assets/5a9c9366-fa62-4c88-bbd2-c39afe912609" />
 
 ## Features
 
@@ -92,8 +92,10 @@ A live settings page, organized into tabs, with instant on-page preview and one-
 
 ## Requirements
 
+Built and tested for **Frappe 16** and **ERPNext 16**.
+
 - **Frappe Framework v16** (`>=16.0.0-dev,<17.0.0-dev`)
-- Compatible with **ERPNext v16** and any other Frappe v16 app — Prism only touches Desk's presentation layer, not business logic
+- **ERPNext v16** if installed alongside it (Prism works with or without ERPNext — it only touches Desk's presentation layer, not business logic, and is compatible with any other Frappe v16 app too)
 - No additional system/apt dependencies
 
 ## Installation
