@@ -1,0 +1,130 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:title",
+ "creation": "2026-08-04 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "title",
+  "theme_preset",
+  "overrides_section",
+  "navbar_color",
+  "menu_style",
+  "column_break_ov1",
+  "button_style",
+  "hover_effect",
+  "column_break_ov2",
+  "field_style",
+  "users_section",
+  "users"
+ ],
+ "fields": [
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Title",
+   "reqd": 1,
+   "unique": 1,
+   "description": "e.g. \"Sales Team\" or \"Finance — Dark Mode\". Just a label for this group of users."
+  },
+  {
+   "fieldname": "theme_preset",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Base Theme",
+   "options": "Theme Preset",
+   "reqd": 1
+  },
+  {
+   "fieldname": "overrides_section",
+   "fieldtype": "Section Break",
+   "label": "Overrides",
+   "collapsible": 1,
+   "description": "Optional. Leave any of these blank to use the base theme's own value — only set the ones you want to differ for this group (e.g. keep the theme but give this group a different navbar color)."
+  },
+  {
+   "fieldname": "navbar_color",
+   "fieldtype": "Color",
+   "label": "Navbar Color"
+  },
+  {
+   "fieldname": "menu_style",
+   "fieldtype": "Select",
+   "label": "Sidebar Menu Style",
+   "options": "\nTheme Color\nDark\nLight\nTransparent"
+  },
+  {
+   "fieldname": "column_break_ov1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "button_style",
+   "fieldtype": "Select",
+   "label": "Button Style",
+   "options": "\nSolid\nGradient\nOutline\nSoft\nGhost\nPill\nSweep\nLink\nBordered Gradient\nGlass\nNeumorphic\nElevated"
+  },
+  {
+   "fieldname": "hover_effect",
+   "fieldtype": "Select",
+   "label": "Hover Effect",
+   "options": "\nLift\nGlow\nInvert\nScale\nTilt\nBorder Draw\nUnderline\nFade Background\nIcon Shift\nDim"
+  },
+  {
+   "fieldname": "column_break_ov2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "field_style",
+   "fieldtype": "Select",
+   "label": "Field Style",
+   "options": "\nFilled\nOutlined\nUnderline\nPill\nSharp\nSoft Shadow\nGlass\nMinimal\nBottom Accent\nBordered Thick"
+  },
+  {
+   "fieldname": "users_section",
+   "fieldtype": "Section Break",
+   "label": "Users"
+  },
+  {
+   "fieldname": "users",
+   "fieldtype": "Table",
+   "label": "Users",
+   "options": "Prism Theme Assignment User",
+   "description": "Everyone listed here gets this theme (and any overrides above) instead of the system default, as soon as you Save."
+  }
+ ],
+ "links": [],
+ "modified": "2026-08-04 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Prism",
+ "name": "Prism Theme Assignment",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Prism Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

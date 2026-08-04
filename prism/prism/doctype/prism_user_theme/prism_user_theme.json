@@ -1,0 +1,113 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "autoname": "field:user",
+ "creation": "2026-08-04 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "user",
+  "assignment",
+  "theme_preset",
+  "column_break_ov",
+  "navbar_color",
+  "menu_style",
+  "button_style",
+  "hover_effect",
+  "field_style"
+ ],
+ "fields": [
+  {
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "User",
+   "options": "User",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "assignment",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Assignment",
+   "options": "Prism Theme Assignment",
+   "read_only": 1,
+   "description": "Set automatically when this record was created by a Theme Assignment. Blank means it was assigned directly."
+  },
+  {
+   "fieldname": "theme_preset",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Theme Preset",
+   "options": "Theme Preset",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_ov",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "navbar_color",
+   "fieldtype": "Color",
+   "label": "Navbar Color Override"
+  },
+  {
+   "fieldname": "menu_style",
+   "fieldtype": "Select",
+   "label": "Menu Style Override",
+   "options": "\nTheme Color\nDark\nLight\nTransparent"
+  },
+  {
+   "fieldname": "button_style",
+   "fieldtype": "Select",
+   "label": "Button Style Override",
+   "options": "\nSolid\nGradient\nOutline\nSoft\nGhost\nPill\nSweep\nLink\nBordered Gradient\nGlass\nNeumorphic\nElevated"
+  },
+  {
+   "fieldname": "hover_effect",
+   "fieldtype": "Select",
+   "label": "Hover Effect Override",
+   "options": "\nLift\nGlow\nInvert\nScale\nTilt\nBorder Draw\nUnderline\nFade Background\nIcon Shift\nDim"
+  },
+  {
+   "fieldname": "field_style",
+   "fieldtype": "Select",
+   "label": "Field Style Override",
+   "options": "\nFilled\nOutlined\nUnderline\nPill\nSharp\nSoft Shadow\nGlass\nMinimal\nBottom Accent\nBordered Thick"
+  }
+ ],
+ "links": [],
+ "modified": "2026-08-04 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Prism",
+ "name": "Prism User Theme",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Prism Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

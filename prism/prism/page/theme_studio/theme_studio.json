@@ -1,0 +1,27 @@
+{
+ "content": null,
+ "creation": "2026-08-03 00:00:00.000000",
+ "docstatus": 0,
+ "doctype": "Page",
+ "icon": "fa fa-paint-brush",
+ "idx": 0,
+ "modified": "2026-08-03 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Prism",
+ "name": "theme-studio",
+ "owner": "Administrator",
+ "page_name": "theme-studio",
+ "roles": [
+  {
+   "role": "System Manager"
+  },
+  {
+   "role": "Prism Manager"
+  }
+ ],
+ "script": null,
+ "standard": "Yes",
+ "style": null,
+ "system_page": 1,
+ "title": "Theme Studio"
+}

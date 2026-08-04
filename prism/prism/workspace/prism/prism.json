@@ -1,0 +1,75 @@
+{
+ "app": "prism",
+ "charts": [],
+ "content": "[{\"id\":\"prism-shortcut-studio\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Theme Studio\",\"col\":4}},{\"id\":\"prism-header-manage\",\"type\":\"header\",\"data\":{\"text\":\"<span style=\\\"font-size: 16px;\\\">Manage</span>\",\"col\":12}},{\"id\":\"prism-shortcut-presets\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Theme Presets\",\"col\":4}},{\"id\":\"prism-shortcut-settings\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Theme Settings\",\"col\":4}},{\"id\":\"prism-shortcut-assignments\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Theme Assignments\",\"col\":4}},{\"id\":\"prism-shortcut-user-themes\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"User Themes\",\"col\":4}}]",
+ "creation": "2026-08-03 00:00:00.000000",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "palette",
+ "idx": 0,
+ "indicator_color": "blue",
+ "is_hidden": 0,
+ "label": "Prism",
+ "link_type": "DocType",
+ "links": [],
+ "modified": "2026-08-03 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Prism",
+ "name": "Prism",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [
+  {
+   "role": "System Manager"
+  },
+  {
+   "role": "Prism Manager"
+  }
+ ],
+ "sequence_id": 1.0,
+ "shortcuts": [
+  {
+   "color": "Blue",
+   "doc_view": "",
+   "label": "Theme Studio",
+   "link_to": "theme-studio",
+   "type": "Page"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Theme Presets",
+   "link_to": "Theme Preset",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "",
+   "label": "Theme Settings",
+   "link_to": "Theme Settings",
+   "type": "DocType"
+  },
+  {
+   "color": "Green",
+   "doc_view": "List",
+   "label": "Theme Assignments",
+   "link_to": "Prism Theme Assignment",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "User Themes",
+   "link_to": "Prism User Theme",
+   "type": "DocType"
+  }
+ ],
+ "title": "Prism",
+ "type": "Workspace"
+}

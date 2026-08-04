@@ -1,0 +1,306 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:theme_name",
+ "creation": "2026-08-03 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "theme_name",
+  "is_standard",
+  "is_dark_mode",
+  "colors_section",
+  "primary_color",
+  "gradient_end_color",
+  "navbar_color",
+  "sidebar_color",
+  "column_break_1",
+  "background_color",
+  "text_color",
+  "shape_section",
+  "field_radius",
+  "icon_style",
+  "menu_style",
+  "glass_opacity",
+  "column_break_2",
+  "font_family",
+  "preview_image",
+  "login_style",
+  "elements_section",
+  "button_style",
+  "column_break_3",
+  "hover_effect",
+  "field_style",
+  "column_break_4",
+  "corner_style",
+  "checkbox_style",
+  "desktop_section",
+  "background_style",
+  "desktop_bg_image",
+  "desktop_bg_overlay_opacity",
+  "hidden_desktop_icons",
+  "app_overrides_section",
+  "app_color_overrides"
+ ],
+ "fields": [
+  {
+   "fieldname": "theme_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Theme Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "is_standard",
+   "fieldtype": "Check",
+   "label": "Is Standard",
+   "description": "Marks this preset as one of Prism's shipped presets (exported as a fixture). Leave unchecked for custom presets you create yourself."
+  },
+  {
+   "default": "0",
+   "fieldname": "is_dark_mode",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Is Dark Mode"
+  },
+  {
+   "fieldname": "colors_section",
+   "fieldtype": "Section Break",
+   "label": "Colors"
+  },
+  {
+   "fieldname": "primary_color",
+   "fieldtype": "Color",
+   "label": "Primary Color",
+   "reqd": 1
+  },
+  {
+   "fieldname": "gradient_end_color",
+   "fieldtype": "Color",
+   "label": "Gradient End Color",
+   "description": "Optional. When set, primary buttons/accents use a gradient from Primary Color to this color instead of a flat fill."
+  },
+  {
+   "fieldname": "navbar_color",
+   "fieldtype": "Color",
+   "label": "Navbar Color",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sidebar_color",
+   "fieldtype": "Color",
+   "label": "Sidebar Color",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "background_color",
+   "fieldtype": "Color",
+   "label": "Background Color",
+   "reqd": 1
+  },
+  {
+   "fieldname": "text_color",
+   "fieldtype": "Color",
+   "label": "Text Color",
+   "reqd": 1
+  },
+  {
+   "fieldname": "shape_section",
+   "fieldtype": "Section Break",
+   "label": "Shape & Typography"
+  },
+  {
+   "fieldname": "field_radius",
+   "fieldtype": "Select",
+   "label": "Field Radius",
+   "options": "Sharp\nSoft\nRounded\nPill",
+   "default": "Soft",
+   "reqd": 1
+  },
+  {
+   "fieldname": "icon_style",
+   "fieldtype": "Select",
+   "label": "Icon Style",
+   "options": "Outline\nFilled\nSolid Glyph\nTwo-tone\nGradient",
+   "default": "Outline",
+   "reqd": 1
+  },
+  {
+   "fieldname": "menu_style",
+   "fieldtype": "Select",
+   "label": "Menu Style",
+   "options": "Theme Color\nDark\nLight\nTransparent\nGlass",
+   "default": "Theme Color",
+   "reqd": 1,
+   "description": "Controls the sidebar's background treatment independent of the accent color. Glass floats the sidebar as a blurred, semi-transparent panel over the Desk background — pairs well with a Desktop Background Image."
+  },
+  {
+   "fieldname": "glass_opacity",
+   "fieldtype": "Int",
+   "label": "Glass Opacity (%)",
+   "default": "65",
+   "description": "Controls how see-through Glass button/field/sidebar surfaces are. 65% is the recommended balance of legibility and effect — very low values can hurt text contrast."
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "font_family",
+   "fieldtype": "Data",
+   "label": "Font Family",
+   "default": "Inter",
+   "reqd": 1
+  },
+  {
+   "fieldname": "preview_image",
+   "fieldtype": "Attach Image",
+   "label": "Preview Image"
+  },
+  {
+   "fieldname": "login_style",
+   "fieldtype": "Select",
+   "label": "Login Page Style",
+   "options": "Centered Card\nSplit Screen\nMinimal\nGlass Floating\nFull Gradient",
+   "default": "Centered Card",
+   "description": "Structural layout of the login/signup page, independent of its colors."
+  },
+  {
+   "fieldname": "elements_section",
+   "fieldtype": "Section Break",
+   "label": "Elements"
+  },
+  {
+   "fieldname": "button_style",
+   "fieldtype": "Select",
+   "label": "Button Style",
+   "options": "Solid\nGradient\nOutline\nSoft\nGhost\nPill\nSweep\nLink\nBordered Gradient\nGlass\nNeumorphic\nElevated\nRipple",
+   "default": "Solid",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "hover_effect",
+   "fieldtype": "Select",
+   "label": "Hover Effect",
+   "options": "Lift\nGlow\nInvert\nScale\nTilt\nBorder Draw\nUnderline\nFade Background\nIcon Shift\nDim",
+   "default": "Lift",
+   "reqd": 1
+  },
+  {
+   "fieldname": "field_style",
+   "fieldtype": "Select",
+   "label": "Field Style",
+   "options": "Filled\nOutlined\nUnderline\nPill\nSharp\nSoft Shadow\nGlass\nMinimal\nBottom Accent\nBordered Thick",
+   "default": "Outlined",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "corner_style",
+   "fieldtype": "Select",
+   "label": "Corner Style",
+   "options": "Default\nCut Corner\nDiamond Cut\nExtra Rounded\nSoft Edge",
+   "default": "Default",
+   "description": "An alternate corner treatment layered on top of Field Radius, applied to buttons, fields, and cards. Extra Rounded/Soft Edge scale the radius up further; Cut Corner/Diamond Cut bevel with clip-path instead."
+  },
+  {
+   "fieldname": "checkbox_style",
+   "fieldtype": "Select",
+   "label": "Checkbox Style",
+   "options": "Default\nGlow\nBounce\nRipple\nSquircle",
+   "default": "Default"
+  },
+  {
+   "fieldname": "desktop_section",
+   "fieldtype": "Section Break",
+   "label": "Desktop"
+  },
+  {
+   "fieldname": "background_style",
+   "fieldtype": "Select",
+   "label": "Background Style",
+   "options": "Solid\nSubtle Gradient",
+   "default": "Solid",
+   "reqd": 1,
+   "description": "Subtle Gradient adds a soft diagonal wash across the Desk canvas using the theme's own colors, instead of a flat single color."
+  },
+  {
+   "fieldname": "desktop_bg_image",
+   "fieldtype": "Attach Image",
+   "label": "Desktop Background Image",
+   "description": "Optional photo/pattern shown behind the app icon grid. Icon tiles keep their own theme-colored fill and labels get a readable backdrop, so this never has to fight for contrast."
+  },
+  {
+   "fieldname": "desktop_bg_overlay_opacity",
+   "fieldtype": "Int",
+   "label": "Background Image Overlay (%)",
+   "default": "40",
+   "description": "How strongly the theme's background color washes over the uploaded image. 40% is the recommended balance — legible icons/labels without losing the photo. 0% shows the photo as-is; 100% effectively hides it."
+  },
+  {
+   "fieldname": "hidden_desktop_icons",
+   "fieldtype": "Table MultiSelect",
+   "label": "Hidden Module Icons",
+   "options": "Prism Hidden Desktop Icon",
+   "description": "Module icons hidden from the app grid for everyone on this theme."
+  },
+  {
+   "fieldname": "app_overrides_section",
+   "fieldtype": "Section Break",
+   "label": "Per-App Color Overrides"
+  },
+  {
+   "fieldname": "app_color_overrides",
+   "fieldtype": "Table",
+   "label": "App Color Overrides",
+   "options": "Prism App Color Override",
+   "description": "Tint specific installed apps (ERPNext, HRMS, ...) with their own accent/navbar/sidebar colors instead of this theme's defaults. Applied automatically as you navigate between apps in Desk."
+  }
+ ],
+ "links": [],
+ "modified": "2026-08-03 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Prism",
+ "name": "Theme Preset",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Prism Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -1,0 +1,255 @@
+/*
+ * Login/signup page theming. Frappe's login.html is a website template with
+ * no session, so it never receives Desk's boot_session injection — this
+ * bundle fetches the active theme via a guest-accessible endpoint instead
+ * (see login_theme.bundle.js) and reskins the EXISTING login markup rather
+ * than replacing frappe/www/login.html outright, so real auth/SSO/forgot-
+ * password/LDAP behavior is untouched.
+ *
+ * Layout: a single centered card (matching Frappe's own default structure),
+ * NOT a split-screen brand panel — icon-prefixed pill fields, a colored
+ * logo badge above the title, centered actions.
+ */
+
+body.prism-login-active {
+	font-family: var(--prism-font, inherit);
+}
+
+body.prism-login-active .page-card {
+	max-width: 380px;
+	margin: 0 auto;
+	border-radius: var(--border-radius-lg);
+	border: none;
+	box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
+	padding: 40px 30px;
+}
+
+body.prism-login-active .page-card-head {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.prism-login-logo-badge {
+	width: 52px;
+	height: 52px;
+	border-radius: var(--border-radius-lg, 14px);
+	background: var(--prism-accent-gradient, var(--primary));
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0 auto 14px;
+}
+.prism-login-logo-badge .app-logo {
+	width: 26px;
+	height: 26px;
+	filter: brightness(0) invert(1);
+}
+body.prism-login-active .page-card-head h4 {
+	font-weight: 600;
+	font-size: 17px;
+}
+
+/* Icon-prefixed pill fields (Frappe already renders .email-field/.password-field
+ * wrapping an <input> + an SVG icon + a show/hide toggle — just restyle them). */
+body.prism-login-active .email-field,
+body.prism-login-active .password-field {
+	position: relative;
+	background: var(--fg-color, #f5f6f8);
+	border-radius: var(--border-radius, var(--border-radius-md));
+	transition: box-shadow 0.15s ease;
+}
+body.prism-login-active .email-field:focus-within,
+body.prism-login-active .password-field:focus-within {
+	box-shadow: 0 0 0 2px var(--primary);
+	background: var(--bg-color, #fff);
+}
+body.prism-login-active .email-field .form-control,
+body.prism-login-active .password-field .form-control {
+	border: none;
+	background: transparent;
+	padding-left: 38px;
+	height: 44px;
+}
+/* Frappe's own login.bundle.scss nests .toggle-password 5 levels deep
+ * (.for-login .page-card .page-card-body .password-field .toggle-password),
+ * giving its fixed `top: 5px` far higher specificity than a flat
+ * "body.prism-login-active .toggle-password" selector — so it won outright
+ * and the toggle sat near the top of the (now 44px-tall) field instead of
+ * vertically centered. !important is the correct tool against a nesting
+ * depth this deep, not a specificity arms race. */
+body.prism-login-active .field-icon {
+	position: absolute !important;
+	left: 12px;
+	top: 50% !important;
+	transform: translateY(-50%) !important;
+	color: var(--text-muted);
+	stroke: var(--text-muted);
+	pointer-events: none;
+}
+body.prism-login-active .toggle-password {
+	position: absolute !important;
+	right: 12px;
+	top: 50% !important;
+	transform: translateY(-50%) !important;
+	font-size: 11.5px;
+	font-weight: 600;
+	color: var(--primary);
+	cursor: pointer;
+}
+
+body.prism-login-active .forgot-password-message {
+	text-align: right;
+	margin-top: -4px;
+}
+body.prism-login-active .forgot-password-message a {
+	font-size: 11.5px;
+	color: var(--primary);
+	font-weight: 600;
+}
+
+/* Primary/secondary buttons */
+body.prism-login-active .btn-login,
+body.prism-login-active .btn-forgot,
+body.prism-login-active .btn-login-with-email-link {
+	background: var(--prism-accent-gradient, var(--primary));
+	color: var(--prism-on-primary, #fff);
+	border: none;
+	border-radius: var(--border-radius, var(--border-radius-md));
+	height: 42px;
+	font-weight: 600;
+	transition: transform 0.12s ease, filter 0.15s ease;
+}
+body.prism-login-active .btn-login:hover,
+body.prism-login-active .btn-forgot:hover,
+body.prism-login-active .btn-login-with-email-link:hover {
+	filter: brightness(1.08);
+	transform: translateY(-1px);
+}
+body.prism-login-active .btn-ldap-login,
+body.prism-login-active .btn-login-option {
+	border-radius: var(--border-radius, var(--border-radius-md));
+	height: 42px;
+}
+
+body.prism-login-active .login-divider {
+	text-align: center;
+	font-size: 11px;
+	color: var(--text-muted);
+}
+
+body.prism-login-active .sign-up-message,
+body.prism-login-active .sign-up-message a {
+	text-align: center;
+	font-size: 12px;
+}
+body.prism-login-active .sign-up-message a {
+	color: var(--primary);
+	font-weight: 600;
+}
+
+/* Generic error template (401 Session Expired, 403 Not Permitted, 404, 500) —
+ * same centered-card treatment as the login flow, so getting logged out
+ * mid-session doesn't dump the user onto an unbranded gray page. */
+body.prism-error-page-active {
+	background: var(--prism-desktop-bg, var(--subtle-accent)) !important;
+	font-family: var(--prism-font, inherit);
+}
+body.prism-error-page-active .error-page {
+	display: flex;
+	justify-content: center;
+	margin-top: 10vh;
+}
+body.prism-error-page-active .error-page > div {
+	background: var(--bg-color, #fff);
+	max-width: 420px;
+	width: 100%;
+	padding: 40px 30px;
+	border-radius: var(--border-radius-lg);
+	box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
+	text-align: center;
+}
+body.prism-error-page-active .error-page h4 {
+	font-weight: 600;
+	color: var(--text-color);
+}
+body.prism-error-page-active .error-page .details p {
+	color: var(--text-muted);
+}
+body.prism-error-page-active .error-page .btn-secondary {
+	background: var(--prism-accent-gradient, var(--primary));
+	color: var(--prism-on-primary, #fff);
+	border: none;
+	border-radius: var(--border-radius, var(--border-radius-md));
+	font-weight: 600;
+}
+
+/* ---------------------------------------------------------------------
+ * Login Page Style (Theme Studio > Login tab) — structural layout
+ * variants layered on top of the existing centered-card markup/CSS above,
+ * which remains the "Centered Card" (default) treatment.
+ * --------------------------------------------------------------------- */
+
+/* Split Screen: a fixed color panel down the left half of the viewport,
+ * the login card pushed into the right half. CSS-only illusion (no DOM
+ * changes to frappe/www/login.html), so it degrades gracefully on narrow
+ * screens instead of breaking. */
+body.prism-login-split {
+	background: var(--bg-color);
+}
+body.prism-login-split::before {
+	content: "";
+	position: fixed;
+	inset: 0 55% 0 0;
+	background: var(--prism-accent-gradient, var(--primary));
+	z-index: 0;
+}
+body.prism-login-split .page-card {
+	position: relative;
+	z-index: 1;
+	margin-left: 55vw;
+}
+@media (max-width: 900px) {
+	body.prism-login-split::before {
+		display: none;
+	}
+	body.prism-login-split .page-card {
+		margin-left: auto;
+	}
+}
+
+/* Minimal: strip the card chrome down to just the form itself. */
+body.prism-login-minimal .page-card {
+	box-shadow: none;
+	border: none;
+	background: transparent;
+	padding-top: 10px;
+}
+body.prism-login-minimal .email-field,
+body.prism-login-minimal .password-field {
+	border-bottom: 1.5px solid var(--border-color);
+	border-radius: 0;
+	background: transparent !important;
+}
+
+/* Glass Floating: the card itself becomes a blurred glass panel over a
+ * theme-gradient backdrop — pairs naturally with the Glass menu style's
+ * visual language, applied here independent of it. */
+body.prism-login-glass {
+	background: var(--prism-accent-gradient, var(--primary));
+}
+body.prism-login-glass .page-card {
+	background: var(--prism-glass-surface, rgba(255, 255, 255, 0.35)) !important;
+	backdrop-filter: blur(18px);
+	-webkit-backdrop-filter: blur(18px);
+	border: 1px solid var(--prism-glass-border, rgba(255, 255, 255, 0.4));
+	box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+}
+
+/* Full Gradient: the whole viewport carries the theme's accent gradient,
+ * card gets extra elevation/contrast to read clearly against it. */
+body.prism-login-fullgradient {
+	background: var(--prism-accent-gradient, var(--primary));
+}
+body.prism-login-fullgradient .page-card {
+	box-shadow: 0 24px 70px rgba(0, 0, 0, 0.3);
+}
