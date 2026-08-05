@@ -38,4 +38,11 @@ def add_prism_desktop_icon():
 	icon.icon_type = "App"
 	icon.link_type = "External"
 	icon.link = "/app/theme-studio"
+	# link_to is a Dynamic Link resolved against whatever doctype link_type
+	# names. Sites that installed an earlier version of this app have
+	# link_to="Prism" left over from when link_type="Workspace Sidebar"; with
+	# link_type now "External" (not a real doctype), Frappe's link validation
+	# tries frappe.get_meta("External") and throws DoesNotExistError unless
+	# this stale value is cleared.
+	icon.link_to = None
 	icon.save(ignore_permissions=True)
