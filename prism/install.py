@@ -22,8 +22,20 @@ def add_prism_desktop_icon():
 	if not frappe.db.exists("Desktop Icon", "Prism"):
 		add_workspace_to_desktop("Prism")
 
+	# Frappe's own post-install sync (create_desktop_icons_from_installed_apps)
+	# only recognizes an app as "already iconified" when icon_type == "App".
+	# add_workspace_to_desktop() above leaves icon_type as "Link", so core
+	# would try to insert a second Desktop Icon also auto-named "Prism" on
+	# every subsequent `bench install-app` for any app, hit a duplicate-key
+	# error, and (since that particular core loop has no try/except) silently
+	# abort icon creation for every app installed after prism in
+	# installed_apps order. Matching icon_type="App" here makes core's own
+	# exists-check short-circuit cleanly instead.
 	icon = frappe.get_doc("Desktop Icon", "Prism")
 	icon.icon_image = "/assets/prism/images/prism-logo.svg"
 	icon.standard = 1
 	icon.app = "prism"
+	icon.icon_type = "App"
+	icon.link_type = "External"
+	icon.link = "/app/theme-studio"
 	icon.save(ignore_permissions=True)
