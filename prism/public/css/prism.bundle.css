@@ -901,21 +901,23 @@ body.prism-icon-gradient svg.icon {
  * loses information, they just don't get the flourish.
  * --------------------------------------------------------------------- */
 @media (prefers-reduced-motion: no-preference) {
+	/* Popper.js positions .dropdown-menu via an inline style.transform
+	 * (translate3d), computed and overwritten after first paint once it
+	 * knows which side has room (it may flip placement, e.g. side -> bottom,
+	 * after an initial guess). Animating `transform` here as well fights
+	 * that inline value: our keyframe's transform gets clobbered mid-animation
+	 * by Popper's reposition, which is what produced the "opens to the side,
+	 * then snaps below" flicker. Fade-in via opacity only -- it doesn't
+	 * touch the property Popper owns. */
 	.dropdown-menu {
 		animation: prism-pop-in 0.15s ease;
-		transform-origin: top left;
-	}
-	.dropdown-menu[x-placement^="top"] {
-		transform-origin: bottom left;
 	}
 	@keyframes prism-pop-in {
 		from {
 			opacity: 0;
-			transform: scale(0.96) translateY(-4px);
 		}
 		to {
 			opacity: 1;
-			transform: scale(1) translateY(0);
 		}
 	}
 
