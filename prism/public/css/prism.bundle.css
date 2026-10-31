@@ -900,6 +900,17 @@ body.prism-icon-gradient svg.icon {
  * an instant, functional state under prefers-reduced-motion — no user
  * loses information, they just don't get the flourish.
  * --------------------------------------------------------------------- */
+/* List-view sort dropdown: its toggle <button> carries a transform (tactile
+ * press animation), which makes the button its own stacking context, so the
+ * menu's z-index:1000 only counts *inside* the button. The list's sticky
+ * right-hand column (count / comments / like) comes later in the DOM and was
+ * painting over the open menu. Lifting the whole control above the list
+ * restores the expected stacking. */
+.sort-selector {
+	position: relative;
+	z-index: 20;
+}
+
 @media (prefers-reduced-motion: no-preference) {
 	/* Popper.js positions .dropdown-menu via an inline style.transform
 	 * (translate3d), computed and overwritten after first paint once it
