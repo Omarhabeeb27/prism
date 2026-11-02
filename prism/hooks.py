@@ -25,7 +25,7 @@ add_to_apps_screen = [
 # ------------------
 
 # include js, css files in header of desk.html
-app_include_css = "prism.bundle.css"
+app_include_css = ["prism.bundle.css", "prism_ui.bundle.css"]
 app_include_js = "prism.bundle.js"
 
 # Boot Session
@@ -36,8 +36,9 @@ extend_bootinfo = "prism.utils.extend_bootinfo"
 # Fixtures
 # ------------------
 # ship the 5 starter presets as reinstall-safe records
+# Built-in themes are not fixtures: Frappe re-imports fixtures on every migrate, which
+# overwrote anyone's edits to them. See prism.install.sync_built_in_themes.
 fixtures = [
-	{"dt": "Theme Preset", "filters": [["is_standard", "=", 1]]},
 	{"dt": "Role", "filters": [["name", "=", "Prism Manager"]]},
 ]
 
@@ -103,6 +104,7 @@ web_include_css = ["prism.bundle.css", "login_theme.bundle.css"]
 # before_install = "prism.install.before_install"
 # after_install = "prism.install.after_install"
 after_sync = "prism.install.after_sync"
+after_migrate = "prism.install.sync_built_in_themes"
 
 # Uninstallation
 # ------------

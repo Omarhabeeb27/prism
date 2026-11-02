@@ -20,6 +20,14 @@ class PrismThemeAssignment(Document):
 		table, and cleans up anyone removed from it since the last save."""
 		wanted_users = {row.user for row in self.users}
 
+		# A user has one assignment. Moving them here takes them off any other, or
+		# re-saving that older assignment would silently pull them back.
+		if wanted_users:
+			frappe.db.delete(
+				"Prism Theme Assignment User",
+				{"parent": ["!=", self.name], "user": ["in", list(wanted_users)]},
+			)
+
 		previously_assigned = frappe.get_all(
 			"Prism User Theme", filters={"assignment": self.name}, pluck="user"
 		)

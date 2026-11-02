@@ -1,0 +1,643 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Prism VERSION\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "1 unsaved change"
+msgstr "تغيير واحد غير محفوظ"
+
+msgid "336 employees across 40 branches"
+msgstr "336 موظفًا في 40 فرعًا"
+
+msgid "40% keeps most photos readable"
+msgstr "نسبة 40% تُبقي معظم الصور واضحة"
+
+msgid "65% keeps text readable over the blur"
+msgstr "نسبة 65% تُبقي النص مقروءًا فوق التمويه"
+
+msgid "Accent"
+msgstr "اللون الأساسي"
+
+msgid "Accent gradient"
+msgstr "تدرج اللون الأساسي"
+
+msgid "Accent gradient end"
+msgstr "نهاية التدرج"
+
+msgid "Add"
+msgstr "إضافة"
+
+msgid "Add an app"
+msgstr "إضافة تطبيق"
+
+msgid "Add employee"
+msgstr "إضافة موظف"
+
+msgid "All pass"
+msgstr "الكل ناجح"
+
+msgid "Also decides light or dark mode"
+msgstr "يحدد أيضًا الوضع الفاتح أو الداكن"
+
+msgid "App colours"
+msgstr "ألوان التطبيقات"
+
+msgid "Apps on the home screen"
+msgstr "التطبيقات في الشاشة الرئيسية"
+
+msgid "Back to {0}"
+msgstr "العودة إلى {0}"
+
+msgid "Background image"
+msgstr "صورة الخلفية"
+
+msgid "Blend the accent into a second colour"
+msgstr "دمج اللون الأساسي مع لون ثانٍ"
+
+msgid "Body text contrast"
+msgstr "تباين النص"
+
+msgid "Body text on the page"
+msgstr "نص الصفحة"
+
+msgid "Button hover"
+msgstr "تأثير المرور على الأزرار"
+
+msgid "Buttons, links and highlights"
+msgstr "الأزرار والروابط والتمييز"
+
+msgid "Centered Card"
+msgstr "بطاقة في الوسط"
+
+msgid "Checkboxes"
+msgstr "مربعات الاختيار"
+
+msgid "Choose a theme"
+msgstr "اختر مظهرًا"
+
+msgid "Choose an app"
+msgstr "اختر تطبيقًا"
+
+msgid "Colour mode"
+msgstr "وضع الألوان"
+
+msgid "Colours"
+msgstr "الألوان"
+
+msgid "Colours in this theme"
+msgstr "ألوان هذا المظهر"
+
+msgid "Corner cut"
+msgstr "قص الزوايا"
+
+msgid "Dark"
+msgstr "داكن"
+
+msgid "Default"
+msgstr "افتراضي"
+
+msgid "Delete this theme"
+msgstr "حذف هذا المظهر"
+
+msgid "Delete {0}? This can't be undone."
+msgstr "حذف {0}؟ لا يمكن التراجع عن ذلك."
+
+msgid "Deleted {0}"
+msgstr "تم حذف {0}"
+
+msgid "Dim"
+msgstr "تعتيم"
+
+msgid "Discard"
+msgstr "تجاهل"
+
+msgid "Discard your unsaved changes to {0}?"
+msgstr "تجاهل التغييرات غير المحفوظة على {0}؟"
+
+msgid "Duplicate this theme"
+msgstr "نسخ هذا المظهر"
+
+msgid "Enter a hex colour like #1A7C93."
+msgstr "أدخل لونًا سداسيًا مثل #1A7C93."
+
+msgid "Fields, buttons and cards"
+msgstr "الحقول والأزرار والبطاقات"
+
+msgid "Filled"
+msgstr "معبأ"
+
+msgid "Fix"
+msgstr "إصلاح"
+
+msgid "For Glass buttons, fields and sidebar"
+msgstr "للأزرار والحقول والشريط الجانبي الزجاجية"
+
+msgid "Full Gradient"
+msgstr "تدرج كامل"
+
+msgid "Ghost"
+msgstr "شفاف"
+
+msgid "Give an app its own colours. Desk switches to them as you move into that app."
+msgstr "امنح أي تطبيق ألوانه الخاصة. يتبدل المظهر إليها عند الانتقال إلى ذلك التطبيق."
+
+msgid "Glass"
+msgstr "زجاجي"
+
+msgid "Glass Floating"
+msgstr "زجاج عائم"
+
+msgid "Glass strength"
+msgstr "قوة الزجاج"
+
+msgid "Glow"
+msgstr "توهج"
+
+msgid "Gradient"
+msgstr "متدرج"
+
+msgid "Header"
+msgstr "الترويسة"
+
+msgid "Image wash"
+msgstr "طبقة لون فوق الصورة"
+
+msgid "In use"
+msgstr "قيد الاستخدام"
+
+msgid "Lift"
+msgstr "رفع"
+
+msgid "Light"
+msgstr "فاتح"
+
+msgid "Light and dark mode are set by your Prism theme."
+msgstr "يحدد مظهر Prism الوضع الفاتح والداكن."
+
+msgid "Live preview"
+msgstr "معاينة مباشرة"
+
+msgid "Login page"
+msgstr "صفحة تسجيل الدخول"
+
+msgid "March salary slips are ready"
+msgstr "قسائم رواتب شهر مارس جاهزة"
+
+msgid "Minimal"
+msgstr "بسيط"
+
+msgid "No app has its own colours yet."
+msgstr "لا يوجد تطبيق بألوان خاصة بعد."
+
+msgid "Outline"
+msgstr "محدد"
+
+msgid "Page background"
+msgstr "خلفية الصفحة"
+
+msgid "Passes AA"
+msgstr "يجتاز AA"
+
+msgid "Pill"
+msgstr "كبسولة"
+
+msgid "Primary buttons"
+msgstr "الأزرار الرئيسية"
+
+msgid "Prism is off. Desk is back to its standard look."
+msgstr "تم إيقاف Prism. عاد النظام إلى مظهره الافتراضي."
+
+msgid "Prism is off. Only you see this preview."
+msgstr "Prism متوقف. أنت فقط ترى هذه المعاينة."
+
+msgid "Prism is on for everyone"
+msgstr "Prism يعمل للجميع"
+
+msgid "Readability"
+msgstr "سهولة القراءة"
+
+msgid "Remove gradient"
+msgstr "إزالة التدرج"
+
+msgid "Rounded"
+msgstr "مستدير"
+
+msgid "Roundness"
+msgstr "الاستدارة"
+
+msgid "Save and apply"
+msgstr "حفظ وتطبيق"
+
+msgid "Save as new theme"
+msgstr "حفظ كمظهر جديد"
+
+msgid "Save changes"
+msgstr "حفظ التغييرات"
+
+msgid "Saved as {0}"
+msgstr "تم الحفظ باسم {0}"
+
+msgid "Saved {0}"
+msgstr "تم حفظ {0}"
+
+msgid "Scale"
+msgstr "تكبير"
+
+msgid "Send a welcome email"
+msgstr "إرسال بريد ترحيبي"
+
+msgid "Shapes"
+msgstr "الأشكال"
+
+msgid "Shapes and motion"
+msgstr "الأشكال والحركة"
+
+msgid "Sharp"
+msgstr "حاد"
+
+msgid "Shown behind the app icons on the home screen"
+msgstr "تظهر خلف أيقونات التطبيقات في الشاشة الرئيسية"
+
+msgid "Sidebar style"
+msgstr "نمط الشريط الجانبي"
+
+msgid "Sign-out and error pages follow this theme too. The real page updates when you apply the theme."
+msgstr "تتبع صفحات الخروج والأخطاء هذا المظهر أيضًا. تتحدث الصفحة الفعلية عند تطبيق المظهر."
+
+msgid "Site supervisor"
+msgstr "مشرف موقع"
+
+msgid "Soft"
+msgstr "ناعم"
+
+msgid "Solid"
+msgstr "صلب"
+
+msgid "Split Screen"
+msgstr "شاشة مقسمة"
+
+msgid "Subtle Gradient"
+msgstr "تدرج خفيف"
+
+msgid "Text on accent buttons"
+msgstr "النص على الأزرار الملونة"
+
+msgid "Text on the page"
+msgstr "النص على الصفحة"
+
+msgid "The bar across the top of each page"
+msgstr "الشريط أعلى كل صفحة"
+
+msgid "The module menu and icon rail"
+msgstr "قائمة الوحدات وشريط الأيقونات"
+
+msgid "Theme Color"
+msgstr "لون المظهر"
+
+msgid "Theme Studio"
+msgstr "استوديو المظاهر"
+
+msgid "Theme name"
+msgstr "اسم المظهر"
+
+msgid "Themes"
+msgstr "المظاهر"
+
+msgid "Transparent"
+msgstr "شفاف"
+
+msgid "Turn off what this theme should hide"
+msgstr "أوقف ما يجب أن يخفيه هذا المظهر"
+
+msgid "Underline"
+msgstr "خط سفلي"
+
+msgid "Upload image"
+msgstr "رفع صورة"
+
+msgid "Use this theme"
+msgstr "استخدام هذا المظهر"
+
+msgid "Your whole Desk is previewing this theme. Nobody else sees it until you apply it."
+msgstr "يعرض نظامك هذا المظهر كمعاينة. لن يراه غيرك حتى تطبقه."
+
+msgid "{0} copy"
+msgstr "نسخة من {0}"
+
+msgid "{0} is now on for everyone"
+msgstr "{0} مفعّل الآن للجميع"
+
+msgid "{0} to fix"
+msgstr "{0} للإصلاح"
+
+msgid "{0} unsaved changes"
+msgstr "{0} تغييرات غير محفوظة"
+
+msgid "{0} users have their own theme through Theme Assignments and won't change."
+msgstr "لدى {0} مستخدمين مظهر خاص عبر تعيينات المظاهر ولن يتغير."
+
+msgid "1 user"
+msgstr "مستخدم واحد"
+
+msgid "About this install"
+msgstr "عن هذا التثبيت"
+
+msgid "Adds the option to Settings, Appearance."
+msgstr "يضيف الخيار إلى الإعدادات، المظهر."
+
+msgid "Adjust for this group"
+msgstr "تعديل لهذه المجموعة"
+
+msgid "Adjustments"
+msgstr "التعديلات"
+
+msgid "All themes"
+msgstr "كل المظاهر"
+
+msgid "An existing theme"
+msgstr "مظهر موجود"
+
+msgid "Appears in Settings, Appearance. Assigned users keep their assignment."
+msgstr "يظهر في الإعدادات، المظهر. يحتفظ المستخدمون المعيّنون بتعيينهم."
+
+msgid "Assignment"
+msgstr "تعيين"
+
+msgid "Assignments"
+msgstr "التعيينات"
+
+msgid "Brand colour"
+msgstr "لون العلامة التجارية"
+
+msgid "Built-in"
+msgstr "مدمج"
+
+msgid "By assignment"
+msgstr "حسب التعيين"
+
+msgid "Change"
+msgstr "تغيير"
+
+msgid "Clear individual themes"
+msgstr "مسح المظاهر الفردية"
+
+msgid "Contrast {0}:1"
+msgstr "التباين {0}:1"
+
+msgid "Create and edit"
+msgstr "إنشاء وتعديل"
+
+msgid "Create assignment"
+msgstr "إنشاء تعيين"
+
+msgid "Default theme"
+msgstr "المظهر الافتراضي"
+
+msgid "Delete {0}? Its users go back to the default theme."
+msgstr "حذف {0}؟ سيعود مستخدموه إلى المظهر الافتراضي."
+
+msgid "Desk users"
+msgstr "مستخدمو النظام"
+
+msgid "Duplicate theme"
+msgstr "نسخ المظهر"
+
+msgid "Edit assignment"
+msgstr "تعديل التعيين"
+
+msgid "Edit {0} in Theme Studio"
+msgstr "تعديل {0} في استوديو المظاهر"
+
+msgid "Everyone gets the current theme the next time a page loads."
+msgstr "سيحصل الجميع على المظهر الحالي عند تحميل الصفحة التالية."
+
+msgid "Everyone you add sees this theme instead of the default. A user can only be in one assignment, so adding them here moves them."
+msgstr "يرى كل من تضيفه هذا المظهر بدل الافتراضي. يمكن للمستخدم أن يكون في تعيين واحد فقط، لذا فإن إضافته هنا تنقله."
+
+msgid "Finance team"
+msgstr "فريق المالية"
+
+msgid "Follow each person's Light, Dark or Automatic choice in Settings, Appearance by giving dark mode its own theme."
+msgstr "اتبع اختيار كل شخص للوضع الفاتح أو الداكن أو التلقائي في الإعدادات، المظهر، بتخصيص مظهر للوضع الداكن."
+
+msgid "Frappe version"
+msgstr "إصدار Frappe"
+
+msgid "Header colour"
+msgstr "لون الترويسة"
+
+msgid "Imported {0}"
+msgstr "تم استيراد {0}"
+
+msgid "Light and dark"
+msgstr "الفاتح والداكن"
+
+msgid "Maintenance"
+msgstr "الصيانة"
+
+msgid "Makes that option one click away."
+msgstr "يجعل هذا الخيار على بُعد نقرة واحدة."
+
+msgid "My brand colour"
+msgstr "لون علامتي التجارية"
+
+msgid "New assignment"
+msgstr "تعيين جديد"
+
+msgid "New theme"
+msgstr "مظهر جديد"
+
+msgid "No assignments yet. Create one to give a team its own theme."
+msgstr "لا توجد تعيينات بعد. أنشئ تعيينًا لمنح فريق مظهره الخاص."
+
+msgid "No themes match. Clear the search or choose another filter."
+msgstr "لا توجد مظاهر مطابقة. امسح البحث أو اختر عامل تصفية آخر."
+
+msgid "No users match this search."
+msgstr "لا يوجد مستخدمون مطابقون لهذا البحث."
+
+msgid "No users match."
+msgstr "لا يوجد مستخدمون مطابقون."
+
+msgid "None, the default theme decides"
+msgstr "لا شيء، يحدد المظهر الافتراضي"
+
+msgid "Now in {0}, will move here"
+msgstr "حاليًا في {0}، وسينتقل إلى هنا"
+
+msgid "Off puts every user back on Frappe's standard look. Nothing is deleted."
+msgstr "الإيقاف يعيد كل مستخدم إلى مظهر Frappe القياسي. لا يُحذف أي شيء."
+
+msgid "On default or their own theme"
+msgstr "على الافتراضي أو مظهرهم الخاص"
+
+msgid "On the default"
+msgstr "على الافتراضي"
+
+msgid "Open Theme Studio"
+msgstr "فتح استوديو المظاهر"
+
+msgid "Open list"
+msgstr "فتح القائمة"
+
+msgid "Open settings form"
+msgstr "فتح نموذج الإعدادات"
+
+msgid "Optional. Anything left alone comes from the theme."
+msgstr "اختياري. ما تتركه دون تغيير يأتي من المظهر."
+
+msgid "Organisation default"
+msgstr "الافتراضي للمؤسسة"
+
+msgid "Pick the theme you want to work in."
+msgstr "اختر المظهر الذي تريد العمل به."
+
+msgid "Pick their own theme"
+msgstr "اختيار مظهرهم الخاص"
+
+msgid "Prism for everyone"
+msgstr "Prism للجميع"
+
+msgid "Prism theme"
+msgstr "مظهر Prism"
+
+msgid "Prism theme: Off"
+msgstr "مظهر Prism: متوقف"
+
+msgid "Prism theme: On"
+msgstr "مظهر Prism: يعمل"
+
+msgid "Prism version"
+msgstr "إصدار Prism"
+
+msgid "Put {0} back to how Prism ships it? Your changes to this theme will be lost."
+msgstr "إعادة {0} إلى إعدادات Prism الأصلية؟ ستفقد تغييراتك على هذا المظهر."
+
+msgid "Refresh everyone's theme"
+msgstr "تحديث مظهر الجميع"
+
+msgid "Reset to original"
+msgstr "إعادة إلى الأصل"
+
+msgid "Reset {0}"
+msgstr "تمت إعادة تعيين {0}"
+
+msgid "Same as the theme"
+msgstr "مثل المظهر"
+
+msgid "Saved. Users get this the next time a page loads."
+msgstr "تم الحفظ. يحصل المستخدمون على ذلك عند تحميل الصفحة التالية."
+
+msgid "Search themes"
+msgstr "البحث في المظاهر"
+
+msgid "Search users"
+msgstr "البحث في المستخدمين"
+
+msgid "Sees"
+msgstr "يرى"
+
+msgid "Select shown"
+msgstr "تحديد المعروض"
+
+msgid "Send everyone with an individually set theme back to the default? Assignments aren't affected."
+msgstr "إعادة كل من لديه مظهر فردي إلى الافتراضي؟ لن تتأثر التعيينات."
+
+msgid "Set individually"
+msgstr "محدد فرديًا"
+
+msgid "Show the switch in the sidebar and home screen"
+msgstr "إظهار المفتاح في الشريط الجانبي والشاشة الرئيسية"
+
+msgid "Site default"
+msgstr "افتراضي الموقع"
+
+msgid "Standard Desk"
+msgstr "المظهر القياسي"
+
+msgid "Start from"
+msgstr "البدء من"
+
+msgid "Their own"
+msgstr "الخاص بهم"
+
+msgid "Theme Assignments"
+msgstr "تعيينات المظاهر"
+
+msgid "Theme assignments"
+msgstr "تعيينات المظاهر"
+
+msgid "Theme for dark mode"
+msgstr "مظهر الوضع الداكن"
+
+msgid "Theme for everyone"
+msgstr "مظهر الجميع"
+
+msgid "Theme for {0}"
+msgstr "مظهر {0}"
+
+msgid "Themes below AA contrast"
+msgstr "مظاهر دون تباين AA"
+
+msgid "This takes {0} out of the assignment {1}. Continue?"
+msgstr "سيخرج هذا {0} من التعيين {1}. متابعة؟"
+
+msgid "Turn Prism on or off for themselves"
+msgstr "تشغيل Prism أو إيقافه لأنفسهم"
+
+msgid "Turn your organisation's theme on or off. This only changes what you see."
+msgstr "شغّل مظهر مؤسستك أو أوقفه. يغيّر هذا ما تراه أنت فقط."
+
+msgid "Updated {0}"
+msgstr "تم تحديث {0}"
+
+msgid "Use a different header colour"
+msgstr "استخدام لون ترويسة مختلف"
+
+msgid "Use this if someone still sees an old theme."
+msgstr "استخدم هذا إذا كان أحدهم لا يزال يرى مظهرًا قديمًا."
+
+msgid "User Themes"
+msgstr "مظاهر المستخدمين"
+
+msgid "Users assigned"
+msgstr "المستخدمون المعيّنون"
+
+msgid "Users on their own theme"
+msgstr "مستخدمون بمظهرهم الخاص"
+
+msgid "Users with their own theme"
+msgstr "مستخدمون بمظهرهم الخاص"
+
+msgid "View login page"
+msgstr "عرض صفحة الدخول"
+
+msgid "What users can do"
+msgstr "ما يمكن للمستخدمين فعله"
+
+msgid "Why"
+msgstr "السبب"
+
+msgid "Your own"
+msgstr "الخاصة بك"
+
+msgid "Your theme"
+msgstr "مظهرك"
+
+msgid "contrast {0}:1"
+msgstr "التباين {0}:1"
+
+msgid "{0} is assigned to you by your administrator."
+msgstr "عيّن لك المسؤول {0}."
+
+msgid "{0} users"
+msgstr "{0} مستخدمين"
+
+msgid "{0} users have one set."
+msgstr "لدى {0} مستخدمين مظهر محدد."
+
+msgid "{0} users moved back to the default"
+msgstr "أعيد {0} مستخدمين إلى الافتراضي"

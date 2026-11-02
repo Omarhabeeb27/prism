@@ -21,13 +21,13 @@
  ],
  "fields": [
   {
+   "description": "e.g. \"Sales Team\" or \"Finance \u2014 Dark Mode\". Just a label for this group of users.",
    "fieldname": "title",
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Title",
    "reqd": 1,
-   "unique": 1,
-   "description": "e.g. \"Sales Team\" or \"Finance — Dark Mode\". Just a label for this group of users."
+   "unique": 1
   },
   {
    "fieldname": "theme_preset",
@@ -38,11 +38,11 @@
    "reqd": 1
   },
   {
+   "collapsible": 1,
+   "description": "Optional. Leave any of these blank to use the base theme's own value \u2014 only set the ones you want to differ for this group (e.g. keep the theme but give this group a different navbar color).",
    "fieldname": "overrides_section",
    "fieldtype": "Section Break",
-   "label": "Overrides",
-   "collapsible": 1,
-   "description": "Optional. Leave any of these blank to use the base theme's own value — only set the ones you want to differ for this group (e.g. keep the theme but give this group a different navbar color)."
+   "label": "Overrides"
   },
   {
    "fieldname": "navbar_color",
@@ -53,7 +53,7 @@
    "fieldname": "menu_style",
    "fieldtype": "Select",
    "label": "Sidebar Menu Style",
-   "options": "\nTheme Color\nDark\nLight\nTransparent"
+   "options": "\nTheme Color\nDark\nLight\nTransparent\nGlass"
   },
   {
    "fieldname": "column_break_ov1",
@@ -63,7 +63,7 @@
    "fieldname": "button_style",
    "fieldtype": "Select",
    "label": "Button Style",
-   "options": "\nSolid\nGradient\nOutline\nSoft\nGhost\nPill\nSweep\nLink\nBordered Gradient\nGlass\nNeumorphic\nElevated"
+   "options": "\nSolid\nGradient\nOutline\nSoft\nGhost\nPill\nSweep\nLink\nBordered Gradient\nGlass\nNeumorphic\nElevated\nRipple"
   },
   {
    "fieldname": "hover_effect",
@@ -87,15 +87,15 @@
    "label": "Users"
   },
   {
+   "description": "Everyone listed here gets this theme (and any overrides above) instead of the system default, as soon as you Save.",
    "fieldname": "users",
    "fieldtype": "Table",
    "label": "Users",
-   "options": "Prism Theme Assignment User",
-   "description": "Everyone listed here gets this theme (and any overrides above) instead of the system default, as soon as you Save."
+   "options": "Prism Theme Assignment User"
   }
  ],
  "links": [],
- "modified": "2026-08-04 00:00:00.000000",
+ "modified": "2026-11-02 22:30:00.000000",
  "modified_by": "Administrator",
  "module": "Prism",
  "name": "Prism Theme Assignment",
@@ -126,5 +126,6 @@
  ],
  "sort_field": "creation",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "track_changes": 1
 }

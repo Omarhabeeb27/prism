@@ -25,14 +25,19 @@ document.addEventListener("DOMContentLoaded", function () {
 			if (login_cards.length) {
 				document.body.classList.add("prism-login-active");
 
-				// Wrap the existing logo image in a colored square badge instead of
-				// showing it flat — matches the centered auth-card reference.
+				// Keeps the logo in its own colours, with an accent mark as the fallback
+				// when the file can't load for a guest.
 				document.querySelectorAll(".page-card-head .app-logo").forEach(function (img) {
 					if (img.closest(".prism-login-logo-badge")) return;
 					var badge = document.createElement("div");
 					badge.className = "prism-login-logo-badge";
 					img.parentNode.insertBefore(badge, img);
 					badge.appendChild(img);
+					var mark_missing = function () {
+						badge.classList.add("is-missing");
+					};
+					img.addEventListener("error", mark_missing);
+					if (img.complete && !img.naturalWidth) mark_missing();
 				});
 
 				var LOGIN_STYLE_CLASS = {

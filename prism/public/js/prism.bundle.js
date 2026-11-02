@@ -317,9 +317,9 @@ prism.build_scale = function (surface, ink, accent) {
 		ink_9: ink,
 		ink_8: prism.mix(ink, surface, 0.06),
 		ink_7: prism.mix(ink, surface, 0.18),
-		ink_6: prism.fix_contrast(prism.mix(ink, surface, 0.3), surface, 4.5),
-		ink_5: prism.fix_contrast(prism.mix(ink, surface, 0.44), surface, 3.6),
-		ink_4: prism.fix_contrast(prism.mix(ink, surface, 0.56), surface, 2.6),
+		ink_6: prism.fix_contrast(prism.mix(ink, surface, 0.3), surface, 5),
+		ink_5: prism.fix_contrast(prism.mix(ink, surface, 0.44), surface, 4.2),
+		ink_4: prism.fix_contrast(prism.mix(ink, surface, 0.56), surface, 3),
 		ink_3: prism.mix(ink, surface, 0.7),
 		ink_2: prism.mix(ink, surface, 0.82),
 		ink_1: prism.mix(ink, surface, 0.9),
@@ -438,6 +438,8 @@ prism.compute_tokens = function (theme) {
 	vars["--prism-sb-raised"] = prism.mix(sidebar, "#ffffff", prism.luminance(sidebar) < 0.2 ? 0.14 : 0.85);
 	vars["--surface-elevation-3"] = is_dark ? prism.mix(bg, "#ffffff", 0.1) : "#ffffff";
 	vars["--prism-sb-fill"] = sidebar_fill;
+	vars["--prism-sb-accent"] = prism.fix_contrast(primary, sidebar, 3);
+	vars["--surface-menu-bar"] = sidebar_fill; // the sidebar's token on earlier Frappe 16 releases
 
 	// Header bar (Frappe 16 has no .navbar: .page-head and .desktop-navbar are
 	// the top of the screen). A primary button that would melt into a same-colour
@@ -497,15 +499,39 @@ prism.set_color_mode = function (is_dark) {
 	root.setAttribute("data-theme", mode);
 };
 
+// What the person chose in Settings > Appearance, which Prism's own mode can hide.
+prism.user_wants_dark = function () {
+	const mode = prism.user_mode || "light";
+	if (mode === "automatic") return window.matchMedia("(prefers-color-scheme: dark)").matches;
+	return mode === "dark";
+};
+
+// The theme this person should be looking at right now.
+prism.current_theme = function () {
+	const dark = prism.settings && prism.settings.dark_theme;
+	return dark && prism.user_wants_dark() ? dark : prism.base_theme;
+};
+
 prism.watch_color_mode = function () {
 	if (prism.color_mode_watcher) return;
 	const root = document.documentElement;
 	prism.color_mode_watcher = new MutationObserver(() => {
-		if (!prism.forced_mode || root.getAttribute("data-theme-mode") === prism.forced_mode) return;
-		prism.set_color_mode(prism.forced_mode === "dark");
-		frappe.show_alert({ message: __("Light and dark mode are set by your Prism theme."), indicator: "blue" });
+		const mode = root.getAttribute("data-theme-mode");
+		if (!prism.forced_mode || mode === prism.forced_mode) return;
+		prism.user_mode = mode;
+		if (prism.settings && prism.settings.dark_theme) {
+			prism.apply_theme(prism.current_theme());
+		} else {
+			prism.set_color_mode(prism.forced_mode === "dark");
+			frappe.show_alert({ message: __("Light and dark mode are set by your Prism theme."), indicator: "blue" });
+		}
 	});
 	prism.color_mode_watcher.observe(root, { attributes: true, attributeFilter: ["data-theme-mode"] });
+	window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+		if (prism.forced_mode && prism.user_mode === "automatic" && prism.settings && prism.settings.dark_theme) {
+			prism.apply_theme(prism.current_theme());
+		}
+	});
 };
 
 prism.toggle_class_group = function (class_map, value, fallback) {
@@ -575,7 +601,7 @@ prism.clear_theme = function () {
 		document.body.classList.remove(cls)
 	);
 	prism.forced_mode = null;
-	const user_mode = ((frappe.boot && frappe.boot.user && frappe.boot.user.desk_theme) || "Light").toLowerCase();
+	const user_mode = prism.user_mode || ((frappe.boot && frappe.boot.user && frappe.boot.user.desk_theme) || "Light").toLowerCase();
 	root.setAttribute("data-theme-mode", user_mode);
 	if (frappe.ui && frappe.ui.set_theme) frappe.ui.set_theme();
 	else root.setAttribute("data-theme", user_mode === "dark" ? "dark" : "light");
@@ -633,7 +659,7 @@ prism.resolve_app_for_route = function (route, callback) {
 // it is idempotent (classList toggles, inline style overwrites).
 prism.apply_app_override = function (app) {
 	const base = prism.base_theme;
-	if (!base) return;
+	if (!base || !prism.is_on()) return;
 	const override = app && base.app_overrides && base.app_overrides[app];
 	if (!override) {
 		prism.apply_theme(base);
@@ -659,11 +685,284 @@ prism.watch_app_overrides = function () {
 	on_route_change(); // resolve for whatever route Desk booted onto
 };
 
+// -- Shared by the Prism pages ---------------------------------------------------
+
+prism.STUDIO_OPTIONS = {
+	menu_style: ["Theme Color", "Dark", "Light", "Transparent", "Glass"],
+	field_radius: ["Sharp", "Soft", "Rounded", "Pill"],
+	button_style: ["Solid", "Gradient", "Outline", "Soft", "Ghost", "Pill", "Sweep", "Link", "Bordered Gradient", "Glass", "Neumorphic", "Elevated", "Ripple"],
+	hover_effect: ["Lift", "Glow", "Invert", "Scale", "Tilt", "Border Draw", "Underline", "Fade Background", "Icon Shift", "Dim"],
+	field_style: ["Filled", "Outlined", "Underline", "Pill", "Sharp", "Soft Shadow", "Glass", "Minimal", "Bottom Accent", "Bordered Thick"],
+	corner_style: ["Default", "Cut Corner", "Diamond Cut", "Extra Rounded", "Soft Edge"],
+	checkbox_style: ["Default", "Glow", "Bounce", "Ripple", "Squircle"],
+	icon_style: ["Outline", "Filled", "Solid Glyph", "Two-tone", "Gradient"],
+	background_style: ["Solid", "Subtle Gradient"],
+	login_style: ["Centered Card", "Split Screen", "Minimal", "Glass Floating", "Full Gradient"],
+};
+
+prism.ui = {
+	// A page with the shared header: title, stats, and a button to the plain list.
+	make_page(wrapper, { title, list_label, list_route }) {
+		const page = frappe.ui.make_app_page({ parent: wrapper, title, single_column: true });
+		if (list_route) {
+			page.set_secondary_action(list_label, () => frappe.set_route(list_route), "list");
+		}
+		const $root = $(`
+			<div class="ps-root ps-page">
+				<header class="ps-hero">
+					<div class="ps-hero-text"><h1 class="ps-title">${title}</h1><div class="ps-stats"></div></div>
+					<div class="ps-hero-actions"></div>
+				</header>
+				<div class="ps-page-body"></div>
+				<div class="ps-toast" hidden role="status"></div>
+			</div>
+		`).appendTo(page.body);
+		return { page, $root, $body: $root.find(".ps-page-body"), $actions: $root.find(".ps-hero-actions"), $stats: $root.find(".ps-stats") };
+	},
+
+	stat(icon, value, label) {
+		return `<div class="ps-stat">
+			<span class="ps-stat-icon">${frappe.utils.icon(icon, "sm")}</span>
+			<span><b>${value}</b><small>${label}</small></span>
+		</div>`;
+	},
+
+	// A miniature Desk drawn from the same tokens as the real one, so a thumbnail
+	// can't disagree with the applied theme.
+	thumb(preset, extra = "") {
+		const { vars } = prism.compute_tokens(preset);
+		const see_through = ["Transparent", "Glass"].includes(preset.menu_style);
+		const pick = {
+			"--t-canvas": vars["--prism-canvas"],
+			"--t-raised": vars["--prism-raised"],
+			"--t-line": vars["--prism-outline-2"],
+			"--t-ink": vars["--prism-ink-7"],
+			"--t-faint": vars["--prism-ink-3"],
+			"--t-sb": see_through ? vars["--prism-canvas"] : vars["--desk-sidebar-bg"],
+			"--t-sb-ink": vars["--prism-sb-ink-5"],
+			"--t-sb-active": vars["--prism-sb-raised"],
+			"--t-nav": vars["--prism-nav-bg"],
+			"--t-nav-ink": vars["--prism-nav-ink-7"],
+			"--t-nav-btn": vars["--prism-nav-gradient"],
+			"--t-accent": vars["--prism-accent-gradient"],
+			"--t-radius": vars["--radius-sm"],
+		};
+		const style = Object.entries(pick)
+			.map(([k, v]) => `${k}:${v}`)
+			.join(";");
+		return `<span class="ps-thumb" style="${style}">
+			<span class="ps-thumb-side"><i></i><i class="on"></i><i></i><i></i></span>
+			<span class="ps-thumb-main">
+				<span class="ps-thumb-head"><i></i><em></em></span>
+				<span class="ps-thumb-card"><i></i><i></i><i></i></span>
+			</span>
+			${extra}
+		</span>`;
+	},
+
+	avatar(user) {
+		const name = frappe.utils.escape_html(user.full_name || user.user || user.name);
+		const initials = (user.full_name || user.user || user.name || "?")
+			.split(/\s+/)
+			.map((part) => part[0])
+			.slice(0, 2)
+			.join("")
+			.toUpperCase();
+		return user.user_image
+			? `<img class="ps-avatar" src="${encodeURI(user.user_image)}" alt="${name}">`
+			: `<span class="ps-avatar" aria-hidden="true">${frappe.utils.escape_html(initials)}</span>`;
+	},
+
+	toast($root, message, undo) {
+		const $toast = $root.find(".ps-toast");
+		$toast.html(
+			`${frappe.utils.icon("check", "sm")}<span>${message}</span>${undo ? `<button type="button" class="ps-toast-undo">${__("Undo")}</button>` : ""}`
+		);
+		$toast.prop("hidden", false);
+		clearTimeout($root.data("toast_timer"));
+		if (undo) {
+			$toast.find(".ps-toast-undo").on("click", () => {
+				$toast.prop("hidden", true);
+				undo();
+			});
+		}
+		$root.data("toast_timer", setTimeout(() => $toast.prop("hidden", true), undo ? 8000 : 3500));
+	},
+
+	readability(preset) {
+		const on = prism.best_on(preset.primary_color, preset.gradient_end_color);
+		return Math.min(
+			prism.contrast_ratio(preset.text_color, preset.background_color),
+			prism.contrast_ratio(on, preset.primary_color),
+			prism.contrast_ratio(on, preset.gradient_end_color || preset.primary_color)
+		);
+	},
+};
+
+// -- The on/off switch every user gets -------------------------------------------
+
+prism.is_on = function () {
+	return !!prism.base_theme && !(prism.settings && prism.settings.off);
+};
+
+prism.set_on_for_me = function (on) {
+	prism.settings.off = on ? 0 : 1;
+	if (on) prism.apply_theme(prism.current_theme());
+	else prism.clear_theme();
+	prism.refresh_switches();
+	return frappe.call({ method: "prism.api.set_my_theme_enabled", args: { enabled: on ? 1 : 0 } }).catch(() => {
+		// The server refused or failed, so the screen goes back to the truth.
+		prism.settings.off = on ? 1 : 0;
+		if (on) prism.clear_theme();
+		else prism.apply_theme(prism.current_theme());
+		prism.refresh_switches();
+	});
+};
+
+prism.refresh_switches = function () {
+	const on = prism.is_on();
+	const label = on ? __("Prism theme: On") : __("Prism theme: Off");
+	$(".prism-switch-sidebar").toggleClass("is-on", on).find(".sidebar-item-label").text(label);
+	$(".prism-switch-dock").toggleClass("is-on", on).attr({ "aria-pressed": on, title: label, "aria-label": label });
+	$(".prism-switch-home").toggleClass("is-on", on).attr({ "aria-pressed": on, title: label, "aria-label": label });
+	$(".prism-appearance .theme-card-wrapper[data-prism-on]").each((_, card) => {
+		card.classList.toggle("selected", card.dataset.prismOn === (on ? "1" : "0"));
+	});
+};
+
+prism.add_switches = function () {
+	if (!prism.settings || !prism.settings.show_toggle) return;
+	const sidebar = frappe.app && frappe.app.sidebar;
+	if (sidebar && sidebar.$standard_items_sections && sidebar.$standard_items_sections.length && !$(".prism-switch-sidebar").length) {
+		sidebar.add_item(sidebar.$standard_items_sections, {
+			label: __("Prism theme: On"),
+			icon: "palette",
+			standard: true,
+			type: "Button",
+			class: "prism-switch-sidebar",
+			onClick: () => prism.set_on_for_me(!prism.is_on()),
+		});
+	}
+	// In the icon rail, directly above the avatar. A sibling of .dock-user rather than a
+	// child: that area opens the user menu on any click inside it.
+	const $dock_user = $(".dock .dock-user").first();
+	if ($dock_user.length && !$(".dock .prism-switch-dock").length) {
+		$(`<div class="prism-switch-dock-row"><button type="button" class="dock-item prism-switch-dock">
+			<span class="dock-item-icon">${frappe.utils.icon("palette", "sm")}</span>
+		</button></div>`)
+			.on("click", ".prism-switch-dock", (e) => {
+				e.stopPropagation();
+				prism.set_on_for_me(!prism.is_on());
+			})
+			.insertBefore($dock_user);
+	}
+	// The home screen hides the sidebar and has its own header.
+	const $notifications = $(".desktop-navbar .desktop-notifications").first();
+	if ($notifications.length && !$(".prism-switch-home").length) {
+		$(`<button type="button" class="btn-reset nav-link text-muted prism-switch-home">
+			${frappe.utils.icon("palette", "md")}
+		</button>`)
+			.on("click", () => prism.set_on_for_me(!prism.is_on()))
+			// Left of the language button when that app is installed.
+			.insertBefore($(".desktop-navbar .desktop-lang-toggle").first().length ? $(".desktop-navbar .desktop-lang-toggle").first() : $notifications);
+	}
+	prism.refresh_switches();
+};
+
+// -- Settings > Appearance -------------------------------------------------------
+
+// Frappe builds the dialog's tabs privately, so the section is added by watching for
+// the Dock heading to appear, rather than by patching the dialog. On a Frappe version
+// that lays the page out differently, the section just doesn't show.
+prism.watch_settings_dialog = function () {
+	if (prism.settings_dialog_watcher) return;
+	prism.settings_dialog_watcher = new MutationObserver(() => {
+		document.querySelectorAll(".settings-dialog-section-title").forEach((title) => {
+			if (title.textContent.trim() !== __("Dock")) return;
+			const body = title.closest(".settings-dialog-section-heading")?.parentElement;
+			if (body && !body.querySelector(".prism-appearance")) prism.render_appearance(body);
+		});
+	});
+	prism.settings_dialog_watcher.observe(document.body, { childList: true, subtree: true });
+};
+
+prism.render_appearance = function (body) {
+	const $section = $(`<div class="prism-appearance"></div>`).appendTo(body);
+	frappe.call("prism.api.get_my_theme").then((r) => {
+		const data = r.message;
+		if (!data.enabled) return $section.remove();
+		const heading = (title, text) => `<div class="settings-dialog-section-heading">
+			<div class="settings-dialog-section-title">${title}</div>
+			<div class="settings-dialog-section-description">${text}</div>
+		</div>`;
+		const card = (attrs, selected, preview, label) => `<div class="theme-card-wrapper${selected ? " selected" : ""}" ${attrs}>
+			<button type="button" class="theme-card">
+				<div class="theme-card-preview prism-card-preview">${preview}</div>
+				<div class="theme-card-footer">
+					<span class="theme-card-label">${label}</span>
+					<span class="theme-card-radio"></span>
+				</div>
+			</button>
+		</div>`;
+		const standard_preview = `<span class="prism-plain-preview"><i></i><i></i><i></i></span>`;
+
+		let html = "";
+		if (data.allow_toggle) {
+			html += heading(__("Prism theme"), __("Turn your organisation's theme on or off. This only changes what you see."));
+			html += `<div class="flex gap-3 mb-4 max-w-lg prism-power-cards">
+				${card(`data-prism-on="1"`, prism.is_on(), prism.ui.thumb(prism.current_theme() || {}), __("On"))}
+				${card(`data-prism-on="0"`, !prism.is_on(), standard_preview, __("Off"))}
+			</div>`;
+		}
+		if (data.allow_choice && !data.assigned) {
+			html += heading(__("Your theme"), __("Pick the theme you want to work in."));
+			html += `<div class="prism-choice-grid mb-4">
+				${card(`data-prism-theme=""`, !data.my_theme, prism.ui.thumb(data.presets.find((p) => p.name === data.default_theme) || {}), __("Organisation default"))}
+				${data.presets
+					.map((p) => card(`data-prism-theme="${frappe.utils.escape_html(p.name)}"`, data.my_theme === p.name, prism.ui.thumb(p), frappe.utils.escape_html(p.theme_name)))
+					.join("")}
+			</div>`;
+		} else if (data.assigned) {
+			html += heading(__("Your theme"), __("{0} is assigned to you by your administrator.", [frappe.utils.escape_html(data.my_theme)]));
+		}
+		$section.html(html);
+
+		$section.on("click", "[data-prism-on]", (e) => prism.set_on_for_me(e.currentTarget.dataset.prismOn === "1"));
+		$section.on("click", "[data-prism-theme]", (e) => {
+			const name = e.currentTarget.dataset.prismTheme;
+			$section.find("[data-prism-theme]").removeClass("selected");
+			e.currentTarget.classList.add("selected");
+			frappe.call({ method: "prism.api.set_my_theme", args: { theme: name || null } }).then(() => {
+				const preset = data.presets.find((p) => p.name === (name || data.default_theme));
+				if (!preset) return;
+				prism.base_theme = Object.assign({}, preset);
+				prism.settings.off = 0;
+				prism.apply_theme(prism.current_theme());
+				prism.refresh_switches();
+			});
+		});
+	});
+};
+
 if (frappe.boot && frappe.boot.prism_theme) {
+	prism.settings = frappe.boot.prism || {};
 	prism.base_theme = frappe.boot.prism_theme;
-	prism.apply_theme(frappe.boot.prism_theme);
+	prism.user_mode = ((frappe.boot.user && frappe.boot.user.desk_theme) || "Light").toLowerCase();
 	prism.watch_color_mode();
+	if (prism.is_on()) prism.apply_theme(prism.current_theme());
 	if (prism.base_theme.app_overrides && Object.keys(prism.base_theme.app_overrides).length) {
 		prism.watch_app_overrides();
 	}
+	prism.watch_settings_dialog();
+	// The sidebar and the home screen's header are built after this runs, and both are
+	// rebuilt as you move around.
+	$(document).ready(() => {
+		prism.add_switches();
+		frappe.router && frappe.router.on("change", () => setTimeout(prism.add_switches, 300));
+		let attempts = 0;
+		const timer = setInterval(() => {
+			prism.add_switches();
+			if (++attempts > 20) clearInterval(timer);
+		}, 500);
+	});
 }

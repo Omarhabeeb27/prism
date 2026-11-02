@@ -53,10 +53,10 @@
   },
   {
    "default": "0",
+   "description": "Marks this preset as one of Prism's shipped presets (exported as a fixture). Leave unchecked for custom presets you create yourself.",
    "fieldname": "is_standard",
    "fieldtype": "Check",
-   "label": "Is Standard",
-   "description": "Marks this preset as one of Prism's shipped presets (exported as a fixture). Leave unchecked for custom presets you create yourself."
+   "label": "Is Standard"
   },
   {
    "default": "0",
@@ -77,10 +77,10 @@
    "reqd": 1
   },
   {
+   "description": "Optional. When set, primary buttons/accents use a gradient from Primary Color to this color instead of a flat fill.",
    "fieldname": "gradient_end_color",
    "fieldtype": "Color",
-   "label": "Gradient End Color",
-   "description": "Optional. When set, primary buttons/accents use a gradient from Primary Color to this color instead of a flat fill."
+   "label": "Gradient End Color"
   },
   {
    "fieldname": "navbar_color",
@@ -116,46 +116,46 @@
    "label": "Shape & Typography"
   },
   {
+   "default": "Soft",
    "fieldname": "field_radius",
    "fieldtype": "Select",
    "label": "Field Radius",
    "options": "Sharp\nSoft\nRounded\nPill",
-   "default": "Soft",
    "reqd": 1
   },
   {
+   "default": "Outline",
    "fieldname": "icon_style",
    "fieldtype": "Select",
    "label": "Icon Style",
    "options": "Outline\nFilled\nSolid Glyph\nTwo-tone\nGradient",
-   "default": "Outline",
    "reqd": 1
   },
   {
+   "default": "Theme Color",
+   "description": "Controls the sidebar's background treatment independent of the accent color. Glass floats the sidebar as a blurred, semi-transparent panel over the Desk background \u2014 pairs well with a Desktop Background Image.",
    "fieldname": "menu_style",
    "fieldtype": "Select",
    "label": "Menu Style",
    "options": "Theme Color\nDark\nLight\nTransparent\nGlass",
-   "default": "Theme Color",
-   "reqd": 1,
-   "description": "Controls the sidebar's background treatment independent of the accent color. Glass floats the sidebar as a blurred, semi-transparent panel over the Desk background — pairs well with a Desktop Background Image."
+   "reqd": 1
   },
   {
+   "default": "65",
+   "description": "Controls how see-through Glass button/field/sidebar surfaces are. 65% is the recommended balance of legibility and effect \u2014 very low values can hurt text contrast.",
    "fieldname": "glass_opacity",
    "fieldtype": "Int",
-   "label": "Glass Opacity (%)",
-   "default": "65",
-   "description": "Controls how see-through Glass button/field/sidebar surfaces are. 65% is the recommended balance of legibility and effect — very low values can hurt text contrast."
+   "label": "Glass Opacity (%)"
   },
   {
    "fieldname": "column_break_2",
    "fieldtype": "Column Break"
   },
   {
+   "default": "Inter",
    "fieldname": "font_family",
    "fieldtype": "Data",
    "label": "Font Family",
-   "default": "Inter",
    "reqd": 1
   },
   {
@@ -164,12 +164,12 @@
    "label": "Preview Image"
   },
   {
+   "default": "Centered Card",
+   "description": "Structural layout of the login/signup page, independent of its colors.",
    "fieldname": "login_style",
    "fieldtype": "Select",
    "label": "Login Page Style",
-   "options": "Centered Card\nSplit Screen\nMinimal\nGlass Floating\nFull Gradient",
-   "default": "Centered Card",
-   "description": "Structural layout of the login/signup page, independent of its colors."
+   "options": "Centered Card\nSplit Screen\nMinimal\nGlass Floating\nFull Gradient"
   },
   {
    "fieldname": "elements_section",
@@ -177,11 +177,11 @@
    "label": "Elements"
   },
   {
+   "default": "Solid",
    "fieldname": "button_style",
    "fieldtype": "Select",
    "label": "Button Style",
    "options": "Solid\nGradient\nOutline\nSoft\nGhost\nPill\nSweep\nLink\nBordered Gradient\nGlass\nNeumorphic\nElevated\nRipple",
-   "default": "Solid",
    "reqd": 1
   },
   {
@@ -189,19 +189,19 @@
    "fieldtype": "Column Break"
   },
   {
+   "default": "Lift",
    "fieldname": "hover_effect",
    "fieldtype": "Select",
    "label": "Hover Effect",
    "options": "Lift\nGlow\nInvert\nScale\nTilt\nBorder Draw\nUnderline\nFade Background\nIcon Shift\nDim",
-   "default": "Lift",
    "reqd": 1
   },
   {
+   "default": "Outlined",
    "fieldname": "field_style",
    "fieldtype": "Select",
    "label": "Field Style",
    "options": "Filled\nOutlined\nUnderline\nPill\nSharp\nSoft Shadow\nGlass\nMinimal\nBottom Accent\nBordered Thick",
-   "default": "Outlined",
    "reqd": 1
   },
   {
@@ -209,19 +209,19 @@
    "fieldtype": "Column Break"
   },
   {
+   "default": "Default",
+   "description": "An alternate corner treatment layered on top of Field Radius, applied to buttons, fields, and cards. Extra Rounded/Soft Edge scale the radius up further; Cut Corner/Diamond Cut bevel with clip-path instead.",
    "fieldname": "corner_style",
    "fieldtype": "Select",
    "label": "Corner Style",
-   "options": "Default\nCut Corner\nDiamond Cut\nExtra Rounded\nSoft Edge",
-   "default": "Default",
-   "description": "An alternate corner treatment layered on top of Field Radius, applied to buttons, fields, and cards. Extra Rounded/Soft Edge scale the radius up further; Cut Corner/Diamond Cut bevel with clip-path instead."
+   "options": "Default\nCut Corner\nDiamond Cut\nExtra Rounded\nSoft Edge"
   },
   {
+   "default": "Default",
    "fieldname": "checkbox_style",
    "fieldtype": "Select",
    "label": "Checkbox Style",
-   "options": "Default\nGlow\nBounce\nRipple\nSquircle",
-   "default": "Default"
+   "options": "Default\nGlow\nBounce\nRipple\nSquircle"
   },
   {
    "fieldname": "desktop_section",
@@ -229,33 +229,33 @@
    "label": "Desktop"
   },
   {
+   "default": "Solid",
+   "description": "Subtle Gradient adds a soft diagonal wash across the Desk canvas using the theme's own colors, instead of a flat single color.",
    "fieldname": "background_style",
    "fieldtype": "Select",
    "label": "Background Style",
    "options": "Solid\nSubtle Gradient",
-   "default": "Solid",
-   "reqd": 1,
-   "description": "Subtle Gradient adds a soft diagonal wash across the Desk canvas using the theme's own colors, instead of a flat single color."
+   "reqd": 1
   },
   {
+   "description": "Optional photo/pattern shown behind the app icon grid. Icon tiles keep their own theme-colored fill and labels get a readable backdrop, so this never has to fight for contrast.",
    "fieldname": "desktop_bg_image",
    "fieldtype": "Attach Image",
-   "label": "Desktop Background Image",
-   "description": "Optional photo/pattern shown behind the app icon grid. Icon tiles keep their own theme-colored fill and labels get a readable backdrop, so this never has to fight for contrast."
+   "label": "Desktop Background Image"
   },
   {
+   "default": "40",
+   "description": "How strongly the theme's background color washes over the uploaded image. 40% is the recommended balance \u2014 legible icons/labels without losing the photo. 0% shows the photo as-is; 100% effectively hides it.",
    "fieldname": "desktop_bg_overlay_opacity",
    "fieldtype": "Int",
-   "label": "Background Image Overlay (%)",
-   "default": "40",
-   "description": "How strongly the theme's background color washes over the uploaded image. 40% is the recommended balance — legible icons/labels without losing the photo. 0% shows the photo as-is; 100% effectively hides it."
+   "label": "Background Image Overlay (%)"
   },
   {
+   "description": "Module icons hidden from the app grid for everyone on this theme.",
    "fieldname": "hidden_desktop_icons",
    "fieldtype": "Table MultiSelect",
    "label": "Hidden Module Icons",
-   "options": "Prism Hidden Desktop Icon",
-   "description": "Module icons hidden from the app grid for everyone on this theme."
+   "options": "Prism Hidden Desktop Icon"
   },
   {
    "fieldname": "app_overrides_section",
@@ -263,15 +263,15 @@
    "label": "Per-App Color Overrides"
   },
   {
+   "description": "Tint specific installed apps (ERPNext, HRMS, ...) with their own accent/navbar/sidebar colors instead of this theme's defaults. Applied automatically as you navigate between apps in Desk.",
    "fieldname": "app_color_overrides",
    "fieldtype": "Table",
    "label": "App Color Overrides",
-   "options": "Prism App Color Override",
-   "description": "Tint specific installed apps (ERPNext, HRMS, ...) with their own accent/navbar/sidebar colors instead of this theme's defaults. Applied automatically as you navigate between apps in Desk."
+   "options": "Prism App Color Override"
   }
  ],
  "links": [],
- "modified": "2026-08-03 00:00:00.000000",
+ "modified": "2026-11-02 22:30:00.000000",
  "modified_by": "Administrator",
  "module": "Prism",
  "name": "Theme Preset",
@@ -302,5 +302,6 @@
  ],
  "sort_field": "creation",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "track_changes": 1
 }

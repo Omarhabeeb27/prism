@@ -32,8 +32,8 @@
    "parenttype": "Sidebar",
    "show_arrow": 0,
    "type": "Link",
-   "link_to": "Theme Preset",
-   "link_type": "DocType"
+   "link_to": "prism-themes",
+   "link_type": "Page"
   },
   {
    "child": 0,
@@ -48,8 +48,8 @@
    "parenttype": "Sidebar",
    "show_arrow": 0,
    "type": "Link",
-   "link_to": "Prism Theme Assignment",
-   "link_type": "DocType"
+   "link_to": "prism-assignments",
+   "link_type": "Page"
   },
   {
    "child": 0,
@@ -64,8 +64,8 @@
    "parenttype": "Sidebar",
    "show_arrow": 0,
    "type": "Link",
-   "link_to": "Prism User Theme",
-   "link_type": "DocType"
+   "link_to": "prism-users",
+   "link_type": "Page"
   },
   {
    "child": 0,
@@ -80,8 +80,8 @@
    "parenttype": "Sidebar",
    "show_arrow": 0,
    "type": "Link",
-   "link_to": "Theme Settings",
-   "link_type": "DocType"
+   "link_to": "prism-settings",
+   "link_type": "Page"
   }
  ],
  "module": "Prism",

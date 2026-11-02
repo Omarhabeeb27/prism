@@ -5,3 +5,5 @@
 [post_model_sync]
 # Patches added in this section will be executed after doctypes are migrated
 prism.patches.v1_0.fix_prism_desktop_icon
+prism.patches.v1_0.enable_user_theme_options
+prism.patches.v1_0.apply_readable_built_in_colours

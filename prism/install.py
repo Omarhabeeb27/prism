@@ -1,14 +1,33 @@
 import frappe
 
 
+def built_in_themes():
+	return frappe.get_file_json(frappe.get_app_path("prism", "themes", "built_in_themes.json"))
+
+
+def sync_built_in_themes():
+	"""Adds any built-in theme this site doesn't have yet. Existing ones are never
+	touched, so edits to them survive every migrate and deploy."""
+	for row in built_in_themes():
+		if not frappe.db.exists("Theme Preset", row["name"]):
+			doc = frappe.get_doc({key: value for key, value in row.items() if key not in ("modified", "name")})
+			doc.is_standard = 1
+			doc.insert(ignore_permissions=True, ignore_if_duplicate=True)
+
+
 def after_sync():
-	"""Runs after fixtures (Theme Preset records) are synced, so the default is guaranteed to exist."""
+	"""Installs the built-in themes first, so the default is guaranteed to exist."""
+	sync_built_in_themes()
 	settings = frappe.get_single("Theme Settings")
 	if not settings.default_theme and frappe.db.exists("Theme Preset", "Frappe Modern"):
 		settings.theming_enabled = 1
 		settings.default_theme = "Frappe Modern"
 		settings.save()
 
+	# Frappe marks patches as done on a fresh install, so the defaults go here as well.
+	from prism.patches.v1_0.enable_user_theme_options import execute as enable_user_theme_options
+
+	enable_user_theme_options()
 	add_prism_desktop_icon()
 
 
@@ -17,10 +36,16 @@ def add_prism_desktop_icon():
 	same core helper Frappe itself uses for "add workspace to desktop" —
 	keeps this portable across fresh installs instead of relying on a
 	one-off console command."""
-	from frappe.desk.doctype.desktop_icon.desktop_icon import add_workspace_to_desktop
+	if not frappe.db.exists("DocType", "Desktop Icon"):
+		return
 
 	if not frappe.db.exists("Desktop Icon", "Prism"):
-		add_workspace_to_desktop("Prism")
+		try:
+			from frappe.desk.doctype.desktop_icon.desktop_icon import add_workspace_to_desktop
+
+			add_workspace_to_desktop("Prism")
+		except ImportError:
+			frappe.get_doc({"doctype": "Desktop Icon", "label": "Prism", "name": "Prism"}).insert(ignore_permissions=True)
 
 	# Frappe's own post-install sync (create_desktop_icons_from_installed_apps)
 	# only recognizes an app as "already iconified" when icon_type == "App".

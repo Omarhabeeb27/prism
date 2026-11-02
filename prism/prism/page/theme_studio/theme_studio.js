@@ -7,19 +7,6 @@ frappe.pages["theme-studio"].on_page_load = function (wrapper) {
 	wrapper.theme_studio = new prism.ThemeStudio(page, wrapper);
 };
 
-prism.STUDIO_OPTIONS = {
-	menu_style: ["Theme Color", "Dark", "Light", "Transparent", "Glass"],
-	field_radius: ["Sharp", "Soft", "Rounded", "Pill"],
-	button_style: ["Solid", "Gradient", "Outline", "Soft", "Ghost", "Pill", "Sweep", "Link", "Bordered Gradient", "Glass", "Neumorphic", "Elevated", "Ripple"],
-	hover_effect: ["Lift", "Glow", "Invert", "Scale", "Tilt", "Border Draw", "Underline", "Fade Background", "Icon Shift", "Dim"],
-	field_style: ["Filled", "Outlined", "Underline", "Pill", "Sharp", "Soft Shadow", "Glass", "Minimal", "Bottom Accent", "Bordered Thick"],
-	corner_style: ["Default", "Cut Corner", "Diamond Cut", "Extra Rounded", "Soft Edge"],
-	checkbox_style: ["Default", "Glow", "Bounce", "Ripple", "Squircle"],
-	icon_style: ["Outline", "Filled", "Solid Glyph", "Two-tone", "Gradient"],
-	background_style: ["Solid", "Subtle Gradient"],
-	login_style: ["Centered Card", "Split Screen", "Minimal", "Glass Floating", "Full Gradient"],
-};
-
 prism.ThemeStudio = class ThemeStudio {
 	constructor(page, wrapper) {
 		this.page = page;
@@ -29,7 +16,14 @@ prism.ThemeStudio = class ThemeStudio {
 		this.filter = "all";
 		this.make_shell();
 		this.bind_events();
-		this.load();
+		this.load(this.requested_theme());
+	}
+
+	// Another page can send us to a theme. Frappe moves route options into the URL.
+	requested_theme() {
+		const from_options = frappe.route_options && frappe.route_options.theme;
+		if (from_options) frappe.route_options = null;
+		return from_options || new URLSearchParams(window.location.search).get("theme");
 	}
 
 	// -- State ---------------------------------------------------------------
@@ -56,7 +50,7 @@ prism.ThemeStudio = class ThemeStudio {
 
 	// Leaving the page must never leave an unsaved look behind.
 	restore_live_theme() {
-		if (prism.base_theme) prism.apply_theme(prism.base_theme);
+		if (prism.is_on()) prism.apply_theme(prism.current_theme());
 		else prism.clear_theme();
 	}
 
@@ -147,6 +141,7 @@ prism.ThemeStudio = class ThemeStudio {
 			</div>
 		`).appendTo(this.page.body);
 
+		this.page.set_secondary_action(__("All themes"), () => frappe.set_route("prism-themes"), "swatch-book");
 		this.page.add_menu_item(__("Duplicate this theme"), () => this.prompt_save_as());
 		this.page.add_menu_item(__("Delete this theme"), () => this.delete_selected());
 	}
@@ -215,7 +210,9 @@ prism.ThemeStudio = class ThemeStudio {
 
 		this.wrapper.on("hide", () => this.restore_live_theme());
 		this.wrapper.on("show", () => {
-			if (this.draft) this.preview();
+			const wanted = this.requested_theme();
+			if (wanted && this.state && wanted !== this.selected?.name) this.load(wanted);
+			else if (this.draft) this.preview();
 			this.move_tab_pill(false);
 		});
 		$(window).on("resize.prism-studio", frappe.utils.debounce(() => this.move_tab_pill(false), 120));
@@ -455,40 +452,10 @@ prism.ThemeStudio = class ThemeStudio {
 		);
 	}
 
-	// A miniature of the real thing rather than colour dots, drawn from the same
-	// tokens the Desk uses, so a thumbnail can't disagree with the applied theme.
-	thumb_style(preset) {
-		const { vars } = prism.compute_tokens(preset);
-		const pick = {
-			"--t-canvas": vars["--prism-canvas"],
-			"--t-raised": vars["--prism-raised"],
-			"--t-line": vars["--prism-outline-2"],
-			"--t-ink": vars["--prism-ink-7"],
-			"--t-faint": vars["--prism-ink-3"],
-			"--t-sb": preset.menu_style === "Transparent" || preset.menu_style === "Glass" ? vars["--prism-canvas"] : vars["--desk-sidebar-bg"],
-			"--t-sb-ink": vars["--prism-sb-ink-5"],
-			"--t-sb-active": vars["--prism-sb-raised"],
-			"--t-nav": vars["--prism-nav-bg"],
-			"--t-nav-ink": vars["--prism-nav-ink-7"],
-			"--t-nav-btn": vars["--prism-nav-gradient"],
-			"--t-accent": vars["--prism-accent-gradient"],
-			"--t-radius": vars["--radius-sm"],
-		};
-		return Object.entries(pick)
-			.map(([k, v]) => `${k}:${v}`)
-			.join(";");
-	}
-
 	theme_card(preset) {
+		const check = `<span class="ps-thumb-check">${frappe.utils.icon("check", "xs")}</span>`;
 		return `<button type="button" class="ps-theme-card" data-name="${frappe.utils.escape_html(preset.name)}">
-			<span class="ps-thumb" style="${this.thumb_style(preset)}">
-				<span class="ps-thumb-side"><i></i><i class="on"></i><i></i><i></i></span>
-				<span class="ps-thumb-main">
-					<span class="ps-thumb-head"><i></i><em></em></span>
-					<span class="ps-thumb-card"><i></i><i></i><i></i></span>
-				</span>
-				<span class="ps-thumb-check">${frappe.utils.icon("check", "xs")}</span>
-			</span>
+			${prism.ui.thumb(preset, check)}
 			<span class="ps-card-name">${frappe.utils.escape_html(preset.theme_name)}</span>
 			<span class="ps-card-tag">${__("In use")}</span>
 		</button>`;
@@ -834,6 +801,7 @@ prism.ThemeStudio = class ThemeStudio {
 	adopt(theme) {
 		prism.base_theme = theme;
 		if (frappe.boot) frappe.boot.prism_theme = theme;
+		prism.settings = prism.settings || {};
 		if (theme) {
 			prism.watch_color_mode();
 			if (Object.keys(theme.app_overrides || {}).length) prism.watch_app_overrides();

@@ -6,7 +6,13 @@
  "field_order": [
   "theming_enabled",
   "default_theme",
-  "help_html"
+  "help_html",
+  "users_section",
+  "allow_user_toggle",
+  "show_toggle_button",
+  "allow_user_choice",
+  "mode_section",
+  "dark_companion_theme"
  ],
  "fields": [
   {
@@ -25,12 +31,50 @@
   {
    "fieldname": "help_html",
    "fieldtype": "HTML",
-   "options": "<p class=\"text-muted\">Controls the system-wide Desk theme, applied to every user. Turn off “Theming Enabled” to instantly revert everyone to stock Frappe styling without uninstalling Prism.</p>"
+   "options": "<p class=\"text-muted\">Controls the system-wide Desk theme, applied to every user. Turn off \u201cTheming Enabled\u201d to instantly revert everyone to stock Frappe styling without uninstalling Prism.</p>"
+  },
+  {
+   "fieldname": "users_section",
+   "fieldtype": "Section Break",
+   "label": "For users"
+  },
+  {
+   "default": "1",
+   "description": "Adds a switch to the sidebar, the home screen and Settings > Appearance.",
+   "fieldname": "allow_user_toggle",
+   "fieldtype": "Check",
+   "label": "Let users turn Prism on or off for themselves"
+  },
+  {
+   "default": "1",
+   "depends_on": "allow_user_toggle",
+   "fieldname": "show_toggle_button",
+   "fieldtype": "Check",
+   "label": "Show the on/off switch in the sidebar and home screen"
+  },
+  {
+   "default": "1",
+   "description": "Shown in Settings > Appearance. Users with a Theme Assignment keep the assigned theme.",
+   "fieldname": "allow_user_choice",
+   "fieldtype": "Check",
+   "label": "Let users pick their own theme"
+  },
+  {
+   "fieldname": "mode_section",
+   "fieldtype": "Section Break",
+   "label": "Light and dark"
+  },
+  {
+   "description": "Used when someone chooses Dark in Settings > Appearance, or Automatic on a device in dark mode. Leave empty and the default theme decides.",
+   "fieldname": "dark_companion_theme",
+   "fieldtype": "Link",
+   "label": "Theme for dark mode",
+   "options": "Theme Preset"
   }
  ],
  "issingle": 1,
  "links": [],
- "modified": "2026-08-03 00:00:00.000000",
+ "modified": "2026-11-02 22:30:00.000000",
  "modified_by": "Administrator",
  "module": "Prism",
  "name": "Theme Settings",
@@ -59,5 +103,6 @@
  ],
  "sort_field": "creation",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "track_changes": 1
 }

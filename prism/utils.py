@@ -18,6 +18,17 @@ def theme_for_boot(theme_name):
 	return theme
 
 
+USER_OFF_KEY = "prism_theme_off"
+
+
+def clear_user_boot_cache(user=None):
+	frappe.cache.hdel("bootinfo", user or frappe.session.user)
+
+
+def is_off_for_user(user=None):
+	return frappe.utils.cint(frappe.defaults.get_user_default(USER_OFF_KEY, user=user or frappe.session.user)) == 1
+
+
 def extend_bootinfo(bootinfo):
 	settings = frappe.get_single("Theme Settings")
 	if not settings.theming_enabled:
@@ -44,6 +55,21 @@ def extend_bootinfo(bootinfo):
 			if user_theme.get(field):
 				theme[field] = user_theme[field]
 	bootinfo.prism_theme = theme
+
+	# A personally chosen or assigned theme is a deliberate pick, so the dark
+	# companion only stands in for the site default.
+	off = settings.allow_user_toggle and is_off_for_user()
+	bootinfo.prism = {
+		"off": 1 if off else 0,
+		"allow_toggle": settings.allow_user_toggle,
+		"show_toggle": settings.allow_user_toggle and settings.show_toggle_button,
+		"allow_choice": settings.allow_user_choice,
+		"dark_theme": theme_for_boot(settings.dark_companion_theme)
+		if settings.dark_companion_theme and not user_theme
+		else None,
+	}
+	if off:
+		return
 
 	# get_desktop_icons() already populated bootinfo.desktop_icons before
 	# extend_bootinfo hooks run (see frappe/boot.py boot_session) — strip out

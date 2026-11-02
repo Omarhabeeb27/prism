@@ -72,6 +72,21 @@ body.prism-theme-active .dock {
 	--surface-elevation-3: var(--prism-sb-raised);
 }
 
+/* Other apps can ship their own Desk styling with fixed sidebar colours (KamilX forces
+ * white text, for one), which turns unreadable on a light theme. While a Prism theme is
+ * on, it decides these colours. */
+body.prism-theme-active .body-sidebar .sidebar-item-label,
+body.prism-theme-active .body-sidebar .item-anchor,
+body.prism-theme-active .body-sidebar .sidebar-item-icon {
+	color: var(--prism-sb-ink-7) !important;
+}
+body.prism-theme-active .body-sidebar .active-sidebar .sidebar-item-label,
+body.prism-theme-active .body-sidebar .active-sidebar .item-anchor,
+body.prism-theme-active .body-sidebar .active-sidebar .sidebar-item-icon,
+body.prism-theme-active .body-sidebar .header-title {
+	color: var(--prism-sb-ink-9) !important;
+}
+
 /* Glass: the sidebar floats as a blurred panel over the canvas or background photo. */
 body.prism-menu-glass .body-sidebar {
 	border-inline-end-color: transparent;
@@ -79,6 +94,8 @@ body.prism-menu-glass .body-sidebar {
 	-webkit-backdrop-filter: blur(16px);
 }
 
+/* .navbar is the top bar on earlier Frappe 16 releases. */
+body.prism-theme-active .navbar,
 body.prism-theme-active .page-head,
 body.prism-theme-active .desktop-navbar {
 	--ink-gray-1: var(--prism-nav-ink-1);
