@@ -4,12 +4,15 @@
 import frappe
 from frappe.model.document import Document
 
+from prism.utils import clear_boot_cache
+
 OVERRIDE_FIELDS = ["navbar_color", "menu_style", "button_style", "hover_effect", "field_style"]
 
 
 class PrismThemeAssignment(Document):
 	def on_update(self):
 		self.sync_user_themes()
+		clear_boot_cache()
 
 	def sync_user_themes(self):
 		"""Writes this assignment's theme + overrides into Prism User Theme
@@ -39,3 +42,4 @@ class PrismThemeAssignment(Document):
 	def on_trash(self):
 		for user in frappe.get_all("Prism User Theme", filters={"assignment": self.name}, pluck="user"):
 			frappe.delete_doc("Prism User Theme", user, ignore_permissions=True, delete_permanently=True)
+		clear_boot_cache()

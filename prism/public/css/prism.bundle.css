@@ -1,189 +1,276 @@
 /*
- * Prism theming layer. Color/radius overrides are applied at runtime (see
- * prism.bundle.js) as inline CSS custom properties on <html> — this file
- * only covers what core Frappe variables can't express: font family, icon
- * style variants, gradient accents, and contrast-aware text/hover treatments
- * for the sidebar rail and navbar (both of which can go dark or light per
- * theme, so their text/icon color can't be a fixed value).
+ * Prism for Frappe 16. Colours and radii are written as inline custom properties
+ * on <html> by prism.compute_tokens() in prism.bundle.js. This file only says
+ * where they go.
+ *
+ * Every rule requires a prism-* class on <body>, and those classes exist only
+ * while a theme is applied. With theming off, this stylesheet matches nothing and
+ * Desk is untouched.
  */
 
-body {
+body.prism-theme-active {
 	font-family: var(--prism-font, inherit);
+	background-color: var(--prism-canvas);
+}
+body.prism-theme-active .btn,
+body.prism-theme-active input,
+body.prism-theme-active select,
+body.prism-theme-active textarea {
+	font-family: inherit;
 }
 
 /* ---------------------------------------------------------------------
- * Navbar: text/icons must flip automatically when navbar_color is dark
- * (e.g. a navy navbar needs light text, a white one needs dark text).
+ * Chrome surfaces. Frappe paints the sidebar and header from the same page-level
+ * tokens as the content, so a dark sidebar on a light page needs its own copy of
+ * them, scoped to that subtree.
  * --------------------------------------------------------------------- */
-.navbar {
-	color: var(--prism-on-navbar, inherit);
-	--icon-stroke: var(--prism-on-navbar, var(--icon-stroke));
-	transition: background-color 0.2s ease;
-
-	/* Same reasoning as .body-sidebar below: any navbar descendant coloring
-	 * itself from --ink-gray-* directly (rather than inheriting `color`)
-	 * needs the token itself overridden to stay legible on a dark navbar. */
-	--ink-gray-9: var(--prism-on-navbar);
-	--ink-gray-8: var(--prism-on-navbar);
-	--ink-gray-7: var(--prism-on-navbar);
-	--ink-gray-6: var(--prism-on-navbar);
-	--ink-gray-5: var(--prism-on-navbar-muted);
-	--ink-gray-4: var(--prism-on-navbar-muted);
-	--ink-gray-3: var(--prism-on-navbar-muted);
-	/* Broader safety net: Frappe also reads plain --text-color/--text-muted/
-	 * --gray-* directly in various components (avatars, dropdown user info,
-	 * subtitles) instead of the espresso --ink-gray-* scale. Override both
-	 * families so nothing slips through regardless of which one a given
-	 * element happens to use. */
-	--text-color: var(--prism-on-navbar);
-	--text-muted: var(--prism-on-navbar-muted);
-	--gray-900: var(--prism-on-navbar);
-	--gray-800: var(--prism-on-navbar);
-	--gray-700: var(--prism-on-navbar-muted);
-	--gray-600: var(--prism-on-navbar-muted);
+body.prism-theme-active .body-sidebar,
+body.prism-theme-active .dock {
+	--ink-gray-1: var(--prism-sb-ink-1);
+	--ink-gray-2: var(--prism-sb-ink-2);
+	--ink-gray-3: var(--prism-sb-ink-3);
+	--ink-gray-4: var(--prism-sb-ink-4);
+	--ink-gray-5: var(--prism-sb-ink-5);
+	--ink-gray-6: var(--prism-sb-ink-6);
+	--ink-gray-7: var(--prism-sb-ink-7);
+	--ink-gray-8: var(--prism-sb-ink-8);
+	--ink-gray-9: var(--prism-sb-ink-9);
+	--surface-gray-1: var(--prism-sb-surface-1);
+	--outline-gray-1: var(--prism-sb-outline-1);
+	--surface-gray-2: var(--prism-sb-surface-2);
+	--outline-gray-2: var(--prism-sb-outline-2);
+	--surface-gray-3: var(--prism-sb-surface-3);
+	--outline-gray-3: var(--prism-sb-outline-3);
+	--surface-gray-4: var(--prism-sb-surface-4);
+	--outline-gray-4: var(--prism-sb-outline-4);
+	--text-color: var(--prism-sb-ink-8);
+	--heading-color: var(--prism-sb-ink-9);
+	--text-muted: var(--prism-sb-ink-6);
+	--text-light: var(--prism-sb-ink-5);
+	--border-color: var(--prism-sb-outline-1);
+	--dark-border-color: var(--prism-sb-outline-2);
+	--control-bg: var(--prism-sb-surface-2);
+	--btn-default-bg: var(--prism-sb-surface-2);
+	--btn-default-hover-bg: var(--prism-sb-surface-4);
+	--subtle-fg: var(--prism-sb-surface-2);
+	--subtle-accent: var(--prism-sb-surface-1);
+	--fg-hover-color: var(--prism-sb-surface-1);
+	color: var(--prism-sb-ink-8);
 }
-.navbar .app-logo,
-.navbar a,
-.navbar .text-muted {
-	color: var(--prism-on-navbar, inherit) !important;
+body.prism-theme-active .body-sidebar {
+	background: var(--prism-sb-fill);
+	border-inline-end-color: var(--prism-sb-outline-1);
 }
-
-/* ---------------------------------------------------------------------
- * Sidebar rail: same contrast requirement as the navbar, plus a proper
- * "active/hover" treatment (tinted background + left accent bar) instead
- * of a flat fill, so the accent color reads as a highlight, not a block.
- * --------------------------------------------------------------------- */
-.body-sidebar {
-	color: var(--prism-on-sidebar, inherit);
-	--icon-stroke: var(--prism-on-sidebar, var(--icon-stroke));
-
-	/* Frappe's actual sidebar link/label text (`.item-anchor`, `.section-break`,
-	 * etc.) is colored directly from these --ink-gray-* tokens with higher
-	 * selector specificity than the rule above, so it ignores inherited
-	 * `color` entirely. Overriding the tokens themselves, scoped to the
-	 * sidebar, is what actually makes sidebar text legible on a dark
-	 * sidebar_color — this is the fix for text going invisible on dark
-	 * surfaces described as "auto-detect dark/light" theming. */
-	--ink-gray-9: var(--prism-on-sidebar);
-	--ink-gray-8: var(--prism-on-sidebar);
-	--ink-gray-7: var(--prism-on-sidebar);
-	--ink-gray-6: var(--prism-on-sidebar);
-	--ink-gray-5: var(--prism-on-sidebar-muted);
-	--ink-gray-4: var(--prism-on-sidebar-muted);
-	--ink-gray-3: var(--prism-on-sidebar-muted);
-	/* Same broader safety net as .navbar above — covers the user-info block
-	 * at the bottom of the sidebar (avatar name/email), which reads
-	 * --text-color/--text-muted rather than --ink-gray-*. */
-	--text-color: var(--prism-on-sidebar);
-	--text-muted: var(--prism-on-sidebar-muted);
-	--gray-900: var(--prism-on-sidebar);
-	--gray-800: var(--prism-on-sidebar);
-	--gray-700: var(--prism-on-sidebar-muted);
-	--gray-600: var(--prism-on-sidebar-muted);
+body.prism-theme-active .dock {
+	background: var(--dock-bg);
+}
+/* Rows and dock tiles keep Frappe 16's own treatment: a raised active tile with a
+ * soft shadow and a gray hover fill. Those come from the tokens scoped above; only
+ * the raised colour needs setting, because core's is plain white. */
+body.prism-theme-active .body-sidebar,
+body.prism-theme-active .dock {
+	--surface-elevation-3: var(--prism-sb-raised);
 }
 
-.body-sidebar .active-sidebar {
-	position: relative;
-	background: var(--sidebar-active-color) !important;
-	box-shadow: none !important;
-}
-.body-sidebar .active-sidebar::before {
-	content: "";
-	position: absolute;
-	left: -8px;
-	top: 6px;
-	bottom: 6px;
-	width: 3px;
-	border-radius: 2px;
-	background: var(--primary);
-}
-
-.body-sidebar .hover,
-.body-sidebar a:hover {
-	background-color: var(--sidebar-hover-color) !important;
-	transition: background-color 0.15s ease;
-}
-
-/* Menu Style (Theme Color/Dark/Light/Transparent) is resolved in JS, since
- * it sets --surface-menu-bar via inline style which always outranks any
- * class-based CSS rule here. prism-menu-* body classes remain available as
- * hooks for anything else that wants to key off the current menu style. */
-body.prism-menu-transparent .body-sidebar {
-	border-right-color: transparent;
-}
-
-/* Glass menu style: the sidebar floats as a blurred, semi-transparent panel
- * instead of a flush-edge rail — pairs with a Desktop Background Image so
- * the photo shows through, but works fine as a standalone effect too. */
+/* Glass: the sidebar floats as a blurred panel over the canvas or background photo. */
 body.prism-menu-glass .body-sidebar {
-	border-right-color: transparent;
-	background: var(--prism-glass-surface, rgba(255, 255, 255, 0.35)) !important;
+	border-inline-end-color: transparent;
 	backdrop-filter: blur(16px);
 	-webkit-backdrop-filter: blur(16px);
-	margin: 10px;
-	border-radius: var(--border-radius-lg);
-	box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
-	height: calc(100% - 20px) !important;
 }
-body.prism-menu-glass .body-sidebar .standard-sidebar-item {
-	border-radius: var(--border-radius, var(--border-radius-md));
-	margin: 2px 6px;
+
+body.prism-theme-active .page-head,
+body.prism-theme-active .desktop-navbar {
+	--ink-gray-1: var(--prism-nav-ink-1);
+	--ink-gray-2: var(--prism-nav-ink-2);
+	--ink-gray-3: var(--prism-nav-ink-3);
+	--ink-gray-4: var(--prism-nav-ink-4);
+	--ink-gray-5: var(--prism-nav-ink-5);
+	--ink-gray-6: var(--prism-nav-ink-6);
+	--ink-gray-7: var(--prism-nav-ink-7);
+	--ink-gray-8: var(--prism-nav-ink-8);
+	--ink-gray-9: var(--prism-nav-ink-9);
+	--surface-gray-1: var(--prism-nav-surface-1);
+	--outline-gray-1: var(--prism-nav-outline-1);
+	--surface-gray-2: var(--prism-nav-surface-2);
+	--outline-gray-2: var(--prism-nav-outline-2);
+	--surface-gray-3: var(--prism-nav-surface-3);
+	--outline-gray-3: var(--prism-nav-outline-3);
+	--surface-gray-4: var(--prism-nav-surface-4);
+	--outline-gray-4: var(--prism-nav-outline-4);
+	--text-color: var(--prism-nav-ink-8);
+	--heading-color: var(--prism-nav-ink-9);
+	--text-muted: var(--prism-nav-ink-6);
+	--text-light: var(--prism-nav-ink-5);
+	--border-color: var(--prism-nav-outline-1);
+	--dark-border-color: var(--prism-nav-outline-2);
+	--control-bg: var(--prism-nav-surface-2);
+	--btn-default-bg: var(--prism-nav-surface-2);
+	--btn-default-hover-bg: var(--prism-nav-surface-4);
+	--subtle-fg: var(--prism-nav-surface-2);
+	--subtle-accent: var(--prism-nav-surface-1);
+	--fg-hover-color: var(--prism-nav-surface-1);
+	color: var(--prism-nav-ink-8);
+	background: var(--prism-nav-bg);
+	border-bottom: 1px solid var(--prism-nav-outline-1);
+	--primary: var(--prism-nav-btn);
+	--btn-primary: var(--prism-nav-btn);
+	--prism-on-primary: var(--prism-nav-on-btn);
+	--prism-accent-gradient: var(--prism-nav-gradient);
+	--prism-accent-ink: var(--prism-nav-accent);
 }
-body.prism-menu-glass .body-sidebar .active-sidebar {
-	border-radius: var(--border-radius, var(--border-radius-md));
-	background: var(--prism-glass-bg, var(--sidebar-active-color)) !important;
+body.prism-theme-active .page-head .page-title,
+body.prism-theme-active .page-head .title-text,
+body.prism-theme-active .page-head .es-breadcrumbs__item {
+	color: var(--prism-nav-ink-9);
 }
-body.prism-menu-glass .body-sidebar .active-sidebar::before {
-	display: none;
+
+/* Menus and dialogs open from inside the sidebar and header but must read as page
+ * surfaces, so they take the page's values back. */
+body.prism-theme-active .dropdown-menu,
+body.prism-theme-active .popover,
+body.prism-theme-active .sidebar-header-menu,
+body.prism-theme-active .frappe-menu,
+body.prism-theme-active .context-menu,
+body.prism-theme-active .awesomplete > ul,
+body.prism-theme-active .modal-content {
+	--ink-gray-1: var(--prism-ink-1);
+	--ink-gray-2: var(--prism-ink-2);
+	--ink-gray-3: var(--prism-ink-3);
+	--ink-gray-4: var(--prism-ink-4);
+	--ink-gray-5: var(--prism-ink-5);
+	--ink-gray-6: var(--prism-ink-6);
+	--ink-gray-7: var(--prism-ink-7);
+	--ink-gray-8: var(--prism-ink-8);
+	--ink-gray-9: var(--prism-ink-9);
+	--surface-gray-1: var(--prism-surface-1);
+	--outline-gray-1: var(--prism-outline-1);
+	--surface-gray-2: var(--prism-surface-2);
+	--outline-gray-2: var(--prism-outline-2);
+	--surface-gray-3: var(--prism-surface-3);
+	--outline-gray-3: var(--prism-outline-3);
+	--surface-gray-4: var(--prism-surface-4);
+	--outline-gray-4: var(--prism-outline-4);
+	--text-color: var(--prism-ink-8);
+	--heading-color: var(--prism-ink-9);
+	--text-muted: var(--prism-ink-6);
+	--text-light: var(--prism-ink-5);
+	--border-color: var(--prism-outline-1);
+	--dark-border-color: var(--prism-outline-2);
+	--control-bg: var(--prism-surface-2);
+	--btn-default-bg: var(--prism-surface-2);
+	--btn-default-hover-bg: var(--prism-surface-4);
+	--subtle-fg: var(--prism-surface-2);
+	--subtle-accent: var(--prism-surface-1);
+	--fg-hover-color: var(--prism-surface-1);
+	color: var(--prism-ink-8);
+	--primary: var(--prism-accent-ink);
+	--btn-primary: var(--prism-accent-ink);
+}
+body.prism-theme-active .dropdown-menu,
+body.prism-theme-active .popover,
+body.prism-theme-active .sidebar-header-menu,
+body.prism-theme-active .frappe-menu,
+body.prism-theme-active .context-menu,
+body.prism-theme-active .awesomplete > ul {
+	background: var(--prism-popover);
+	border-color: var(--prism-outline-2);
+	/* A blurred trigger next to an open menu otherwise shows through it. */
+	backdrop-filter: none;
+	-webkit-backdrop-filter: none;
+}
+body.prism-theme-active .modal-content {
+	background: var(--prism-popover);
+	border-radius: var(--radius-lg);
+}
+body.prism-theme-active .dropdown-menu .dropdown-item:hover,
+body.prism-theme-active .dropdown-menu .dropdown-item:focus {
+	background-color: var(--prism-surface-2);
+	color: var(--prism-ink-9);
 }
 
 /* ---------------------------------------------------------------------
- * Buttons: selectable style (Elements tab) + contrast-aware text +
- * selectable hover effect, all drawn from the same theme tokens so any
- * combination stays legible automatically.
+ * Buttons. Frappe's primary button takes its text from --neutral (white or black
+ * by light/dark mode), which is wrong for most accents.
  * --------------------------------------------------------------------- */
-.btn.btn-primary {
-	border: none;
+body.prism-theme-active .btn.btn-primary {
+	background: var(--btn-primary);
+	color: var(--prism-on-primary);
+	--icon-stroke: currentColor;
+	--icon-fill-bg: transparent;
 	transition: transform 0.12s ease, box-shadow 0.15s ease, filter 0.15s ease, background 0.15s ease, color 0.15s ease;
 }
-.btn.btn-primary:active {
+body.prism-theme-active .btn.btn-primary:hover {
+	color: var(--prism-on-primary);
+	filter: brightness(1.08);
+}
+body.prism-theme-active .btn.btn-primary:active {
 	transform: scale(0.97);
+	color: var(--prism-on-primary) !important;
+	background: var(--btn-primary) !important;
+	filter: brightness(0.92);
+}
+body.prism-theme-active .btn:focus-visible {
+	box-shadow: 0 0 0 2px var(--prism-raised), 0 0 0 4px var(--prism-accent-ink);
+	outline: none;
+}
+body.prism-theme-active .es-button:not([data-theme="red"]):not(.btn-danger) {
+	--bt-solid-bg: var(--btn-primary);
+	--bt-solid-bg-hover: color-mix(in srgb, var(--btn-primary) 88%, var(--prism-on-primary));
+	--bt-solid-bg-active: color-mix(in srgb, var(--btn-primary) 80%, var(--prism-on-primary));
+	--bt-solid-fg: var(--prism-on-primary);
+}
+body.prism-theme-active .es-button:focus-visible {
+	box-shadow: 0 0 0 2px var(--prism-raised), 0 0 0 4px var(--prism-accent-ink);
+	outline: none;
+}
+body.prism-theme-active .btn.btn-primary-light {
+	background: var(--highlight-color);
+	color: var(--prism-accent-ink);
+	border-color: transparent;
 }
 
 /* Button style variants (12) — applied to .btn-primary, the surface where a
  * fill/border choice actually reads as intentional. Applies everywhere
  * .btn-primary appears in real Desk: page header actions, dialog footers,
  * form save buttons, list view bulk actions — not just Theme Studio. */
-body.prism-btn-solid .btn.btn-primary {
+body.prism-btn-solid .btn.btn-primary,
+body.prism-btn-solid .es-button[data-variant="solid"] {
 	background: var(--btn-primary);
 	color: var(--prism-on-primary, var(--neutral));
 	border: none;
 }
-body.prism-btn-gradient .btn.btn-primary {
+body.prism-btn-gradient .btn.btn-primary,
+body.prism-btn-gradient .es-button[data-variant="solid"] {
 	background: var(--prism-accent-gradient, var(--btn-primary));
 	color: var(--prism-on-primary, var(--neutral));
 	border: none;
 }
-body.prism-btn-outline .btn.btn-primary {
+body.prism-btn-outline .btn.btn-primary,
+body.prism-btn-outline .es-button[data-variant="solid"] {
 	background: transparent;
-	color: var(--primary);
-	border: 1.5px solid var(--primary);
+	color: var(--prism-accent-ink);
+	border: 1.5px solid var(--prism-accent-ink);
 }
-body.prism-btn-soft .btn.btn-primary {
-	background: var(--sidebar-active-color);
-	color: var(--primary);
+body.prism-btn-soft .btn.btn-primary,
+body.prism-btn-soft .es-button[data-variant="solid"] {
+	background: var(--highlight-color);
+	color: var(--prism-accent-ink);
 	border: none;
 }
-body.prism-btn-ghost .btn.btn-primary {
+body.prism-btn-ghost .btn.btn-primary,
+body.prism-btn-ghost .es-button[data-variant="solid"] {
 	background: transparent;
-	color: var(--primary);
+	color: var(--prism-accent-ink);
 	border: none;
 	box-shadow: none;
 }
-body.prism-btn-ghost .btn.btn-primary:hover {
+body.prism-btn-ghost .btn.btn-primary:hover,
+body.prism-btn-ghost .es-button[data-variant="solid"]:hover {
 	background: var(--sidebar-hover-color);
 }
-body.prism-btn-pill .btn.btn-primary {
+body.prism-btn-pill .btn.btn-primary,
+body.prism-btn-pill .es-button[data-variant="solid"] {
 	background: var(--btn-primary);
 	color: var(--prism-on-primary, var(--neutral));
 	border: none;
@@ -191,15 +278,17 @@ body.prism-btn-pill .btn.btn-primary {
 	padding-left: 16px;
 	padding-right: 16px;
 }
-body.prism-btn-sweep .btn.btn-primary {
+body.prism-btn-sweep .btn.btn-primary,
+body.prism-btn-sweep .es-button[data-variant="solid"] {
 	position: relative;
-	background: var(--sidebar-active-color);
-	color: var(--primary);
+	background: var(--highlight-color);
+	color: var(--prism-accent-ink);
 	border: none;
 	overflow: hidden;
 	z-index: 1;
 }
-body.prism-btn-sweep .btn.btn-primary::before {
+body.prism-btn-sweep .btn.btn-primary::before,
+body.prism-btn-sweep .es-button[data-variant="solid"]::before {
 	content: "";
 	position: absolute;
 	inset: 0;
@@ -208,29 +297,34 @@ body.prism-btn-sweep .btn.btn-primary::before {
 	transition: left 0.3s ease;
 	z-index: -1;
 }
-body.prism-btn-sweep .btn.btn-primary:hover {
+body.prism-btn-sweep .btn.btn-primary:hover,
+body.prism-btn-sweep .es-button[data-variant="solid"]:hover {
 	color: var(--prism-on-primary, #fff);
 }
-body.prism-btn-sweep .btn.btn-primary:hover::before {
+body.prism-btn-sweep .btn.btn-primary:hover::before,
+body.prism-btn-sweep .es-button[data-variant="solid"]:hover::before {
 	left: 0;
 }
-body.prism-btn-link .btn.btn-primary {
+body.prism-btn-link .btn.btn-primary,
+body.prism-btn-link .es-button[data-variant="solid"] {
 	background: transparent;
-	color: var(--primary);
+	color: var(--prism-accent-ink);
 	border: none;
 	box-shadow: none;
 	text-decoration: underline;
 	padding-left: 2px;
 	padding-right: 2px;
 }
-body.prism-btn-bordered-gradient .btn.btn-primary {
+body.prism-btn-bordered-gradient .btn.btn-primary,
+body.prism-btn-bordered-gradient .es-button[data-variant="solid"] {
 	position: relative;
 	background: var(--bg-color);
-	color: var(--primary);
+	color: var(--prism-accent-ink);
 	border: 2px solid transparent;
 	background-clip: padding-box;
 }
-body.prism-btn-bordered-gradient .btn.btn-primary::before {
+body.prism-btn-bordered-gradient .btn.btn-primary::before,
+body.prism-btn-bordered-gradient .es-button[data-variant="solid"]::before {
 	content: "";
 	position: absolute;
 	inset: 0;
@@ -239,26 +333,30 @@ body.prism-btn-bordered-gradient .btn.btn-primary::before {
 	background: var(--prism-accent-gradient, var(--primary));
 	z-index: -1;
 }
-body.prism-btn-glass .btn.btn-primary {
+body.prism-btn-glass .btn.btn-primary,
+body.prism-btn-glass .es-button[data-variant="solid"] {
 	background: var(--prism-glass-bg, var(--sidebar-hover-color));
 	backdrop-filter: blur(8px);
 	-webkit-backdrop-filter: blur(8px);
-	color: var(--primary);
+	color: var(--prism-accent-ink);
 	border: 1px solid var(--prism-glass-border, var(--sidebar-active-color));
 }
-body.prism-btn-neumorphic .btn.btn-primary {
+body.prism-btn-neumorphic .btn.btn-primary,
+body.prism-btn-neumorphic .es-button[data-variant="solid"] {
 	background: var(--bg-color);
-	color: var(--primary);
+	color: var(--prism-accent-ink);
 	border: none;
-	box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.12), -4px -4px 8px rgba(255, 255, 255, 0.6);
+	box-shadow: 4px 4px 8px var(--prism-neu-dark), -4px -4px 8px var(--prism-neu-light);
 }
-body.prism-btn-elevated .btn.btn-primary {
+body.prism-btn-elevated .btn.btn-primary,
+body.prism-btn-elevated .es-button[data-variant="solid"] {
 	background: var(--btn-primary);
 	color: var(--prism-on-primary, var(--neutral));
 	border: none;
 	box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
 }
-body.prism-btn-ripple .btn.btn-primary {
+body.prism-btn-ripple .btn.btn-primary,
+body.prism-btn-ripple .es-button[data-variant="solid"] {
 	background: var(--prism-accent-gradient, var(--btn-primary));
 	color: var(--prism-on-primary, var(--neutral));
 	border: none;
@@ -295,33 +393,43 @@ body.prism-btn-ripple .btn.btn-primary {
  * .btn-primary-light), not just the Elements tab preview, so hover
  * feedback is consistent everywhere a button appears. Each is skipped
  * under prefers-reduced-motion via the global rule further down. */
-body.prism-hover-fx-lift .btn:hover {
+body.prism-hover-fx-lift .btn:hover,
+body.prism-hover-fx-lift .es-button:hover {
 	transform: translateY(-2px);
 	box-shadow: 0 8px 18px rgba(0, 0, 0, 0.16);
 }
-body.prism-hover-fx-glow .btn:hover {
+body.prism-hover-fx-glow .btn:hover,
+body.prism-hover-fx-glow .es-button:hover {
 	box-shadow: 0 0 0 3px var(--sidebar-active-color);
 }
-body.prism-hover-fx-invert .btn.btn-primary:hover {
+body.prism-hover-fx-invert .btn.btn-primary:hover,
+body.prism-hover-fx-invert .es-button[data-variant="solid"]:hover {
 	filter: invert(0.12) brightness(1.1);
 }
 body.prism-hover-fx-invert .btn.btn-default:hover,
+body.prism-hover-fx-invert .es-button.btn-default:hover,
 body.prism-hover-fx-invert .btn.btn-secondary:hover,
-body.prism-hover-fx-invert .btn.btn-ghost:hover {
+body.prism-hover-fx-invert .es-button.btn-secondary:hover,
+body.prism-hover-fx-invert .btn.btn-ghost:hover,
+body.prism-hover-fx-invert .es-button.btn-ghost:hover {
 	background: var(--primary);
 	color: var(--prism-on-primary, #fff);
 }
-body.prism-hover-fx-scale .btn:hover {
+body.prism-hover-fx-scale .btn:hover,
+body.prism-hover-fx-scale .es-button:hover {
 	transform: scale(1.05);
 }
-body.prism-hover-fx-tilt .btn:hover {
+body.prism-hover-fx-tilt .btn:hover,
+body.prism-hover-fx-tilt .es-button:hover {
 	transform: rotate(-1deg) scale(1.03);
 }
-body.prism-hover-fx-border-draw .btn {
+body.prism-hover-fx-border-draw .btn,
+body.prism-hover-fx-border-draw .es-button {
 	position: relative;
 	border: 1.5px solid transparent !important;
 }
-body.prism-hover-fx-border-draw .btn::after {
+body.prism-hover-fx-border-draw .btn::after,
+body.prism-hover-fx-border-draw .es-button::after {
 	content: "";
 	position: absolute;
 	inset: 0;
@@ -335,13 +443,16 @@ body.prism-hover-fx-border-draw .btn::after {
 	transition: opacity 0.2s ease;
 	pointer-events: none;
 }
-body.prism-hover-fx-border-draw .btn:hover::after {
+body.prism-hover-fx-border-draw .btn:hover::after,
+body.prism-hover-fx-border-draw .es-button:hover::after {
 	opacity: 1;
 }
-body.prism-hover-fx-underline .btn {
+body.prism-hover-fx-underline .btn,
+body.prism-hover-fx-underline .es-button {
 	position: relative;
 }
-body.prism-hover-fx-underline .btn::after {
+body.prism-hover-fx-underline .btn::after,
+body.prism-hover-fx-underline .es-button::after {
 	content: "";
 	position: absolute;
 	left: 50%;
@@ -352,15 +463,18 @@ body.prism-hover-fx-underline .btn::after {
 	transition: all 0.2s ease;
 	transform: translateX(-50%);
 }
-body.prism-hover-fx-underline .btn:hover::after {
+body.prism-hover-fx-underline .btn:hover::after,
+body.prism-hover-fx-underline .es-button:hover::after {
 	width: 60%;
 }
-body.prism-hover-fx-fade-bg .btn {
+body.prism-hover-fx-fade-bg .btn,
+body.prism-hover-fx-fade-bg .es-button {
 	position: relative;
 	overflow: hidden;
 	z-index: 1;
 }
-body.prism-hover-fx-fade-bg .btn::before {
+body.prism-hover-fx-fade-bg .btn::before,
+body.prism-hover-fx-fade-bg .es-button::before {
 	content: "";
 	position: absolute;
 	inset: 0;
@@ -369,100 +483,20 @@ body.prism-hover-fx-fade-bg .btn::before {
 	transition: opacity 0.2s ease;
 	z-index: -1;
 }
-body.prism-hover-fx-fade-bg .btn:hover::before {
+body.prism-hover-fx-fade-bg .btn:hover::before,
+body.prism-hover-fx-fade-bg .es-button:hover::before {
 	opacity: 1;
 }
 body.prism-hover-fx-icon-shift .btn:hover svg,
-body.prism-hover-fx-icon-shift .btn:hover .icon {
+body.prism-hover-fx-icon-shift .es-button:hover svg,
+body.prism-hover-fx-icon-shift .btn:hover .icon,
+body.prism-hover-fx-icon-shift .es-button:hover .icon {
 	transform: translateX(3px);
 	transition: transform 0.2s ease;
 }
-body.prism-hover-fx-dim .btn:hover {
+body.prism-hover-fx-dim .btn:hover,
+body.prism-hover-fx-dim .es-button:hover {
 	opacity: 0.65;
-}
-
-/* ---------------------------------------------------------------------
- * The rest of Frappe's real button vocabulary — .btn-default/.btn-secondary
- * (neutral action), .btn-ghost (borderless), .btn-danger (destructive),
- * .btn-primary-light (tinted "soft primary", used for e.g. filter chips),
- * .icon-btn (icon-only), and disabled/press states. These already read
- * Frappe's own --control-bg/--text-color/--btn-default-hover-bg variables,
- * which are theme-aware by inheritance — what's missing is tactile
- * feedback consistent with .btn-primary above, and a themed tint for the
- * "light" variant instead of Frappe's hardcoded gray.
- * --------------------------------------------------------------------- */
-.btn {
-	transition: transform 0.1s ease, box-shadow 0.15s ease, filter 0.15s ease, background-color 0.15s ease;
-}
-.btn:active {
-	transform: scale(0.97);
-}
-.btn:disabled,
-.btn.disabled {
-	opacity: 0.55;
-	cursor: not-allowed;
-	transform: none !important;
-	filter: none !important;
-}
-
-.btn.btn-default:hover,
-.btn.btn-secondary:hover {
-	filter: brightness(0.97);
-}
-[data-theme="dark"] .btn.btn-default:hover,
-[data-theme="dark"] .btn.btn-secondary:hover {
-	filter: brightness(1.15);
-}
-
-.btn.btn-ghost:hover {
-	background-color: var(--sidebar-hover-color);
-}
-
-.btn.btn-danger {
-	transition: transform 0.1s ease, filter 0.15s ease;
-}
-.btn.btn-danger:hover {
-	filter: brightness(1.08);
-}
-
-/* Themed "soft primary" — tinted with the accent instead of Frappe's
- * hardcoded gray, matching the Soft button-style option in Elements. */
-.btn.btn-primary-light {
-	background: var(--sidebar-active-color);
-	color: var(--primary);
-	border-color: transparent;
-}
-.btn.btn-primary-light:hover,
-.btn.btn-primary-light:active {
-	color: var(--primary);
-	filter: brightness(0.96);
-}
-
-.btn.icon-btn:hover {
-	background-color: var(--sidebar-hover-color);
-}
-
-/* ---------------------------------------------------------------------
- * Form fields: theme-colored focus ring (Frappe's own --focus-default is
- * a hardcoded neutral gray), native checkbox/radio/toggle accent color,
- * and a themed active-tab indicator on the form tab strip.
- * --------------------------------------------------------------------- */
-.form-control:focus,
-.form-control:focus-visible {
-	border-color: var(--primary) !important;
-	box-shadow: 0 0 0 2px var(--sidebar-active-color) !important;
-}
-input[type="checkbox"],
-input[type="radio"] {
-	accent-color: var(--primary);
-}
-.form-tabs .nav-link.active {
-	border-bottom-color: var(--primary) !important;
-	color: var(--primary) !important;
-}
-.select-wrap::after,
-select.form-control {
-	transition: border-color 0.15s ease;
 }
 
 /* ---------------------------------------------------------------------
@@ -531,445 +565,88 @@ body.prism-field-bordered-thick .form-control:focus {
 }
 
 /* ---------------------------------------------------------------------
- * Desktop background style: a "Subtle Gradient" option so the Desk canvas
- * (html/body background, per core desktop.scss) isn't necessarily a flat
- * single color — a soft diagonal wash tinted with the theme's own accent.
+ * Fields: accent focus ring, tabs and checkboxes. Read-only values stay on the
+ * token Frappe already gives them.
  * --------------------------------------------------------------------- */
-body.prism-bg-gradient {
-	background: var(--prism-desktop-bg) !important;
-	background-attachment: fixed;
+body.prism-theme-active .form-control:focus,
+body.prism-theme-active .form-control:focus-visible {
+	border-color: var(--prism-accent-ink) !important;
+	box-shadow: 0 0 0 2px var(--sidebar-active-color) !important;
+}
+body.prism-theme-active input[type="checkbox"],
+body.prism-theme-active input[type="radio"] {
+	accent-color: var(--primary);
+}
+body.prism-theme-active .form-tabs .nav-link.active {
+	border-bottom-color: var(--prism-accent-ink) !important;
+	color: var(--prism-accent-ink) !important;
+}
+body.prism-theme-active .form-sidebar .sidebar-label:hover,
+body.prism-theme-active .navbar-breadcrumbs a:hover {
+	color: var(--prism-accent-ink);
+}
+body.prism-theme-active .grid-row.grid-row-selected,
+body.prism-theme-active .grid-static-col.grid-static-col-selected {
+	background-color: var(--highlight-color) !important;
 }
 
-/* ---------------------------------------------------------------------
- * Module/desktop icons (Framework, Organization, Accounting, ...) are
- * baked blue PNG/SVG assets, not CSS-colorable directly — hue-rotate is
- * the practical way to shift a whole flat-color icon set toward the
- * theme's accent without shipping per-theme icon sprite sheets.
- * --------------------------------------------------------------------- */
-img.app-icon:not([alt="Prism"]),
-.widget-group .icon-container img:not([alt="Prism"]),
-img.logo:not([alt="Prism"]),
-.header-logo img {
-	/* Widened from wrapper-scoped selectors (.icon-container/.desktop-icon)
-	 * to catch img.app-icon wherever it renders — the collapsed-sidebar
-	 * workspace flyout reuses the same desktop_icon.html template but
-	 * without those wrapper classes, so it was silently missing the
-	 * recolor and showing the baked-blue asset regardless of theme.
-	 * img.logo (unscoped — no reliable single wrapper class) covers a THIRD
-	 * icon path: frappe/ui/menu.js's ContextMenu widget (wrapped in
-	 * .frappe-menu/.context-menu, not .dropdown-menu or .sidebar-header-menu)
-	 * renders the "Workspaces"/"Display"/"Help" flyout submenus with the
-	 * exact same <img class="logo"> markup as sidebar_header.js's top-level
-	 * app-switcher items. */
-	/* hue-rotate and saturate only ever touch hue/saturation, never
-	 * lightness — the white glyph inside each colored tile has zero
-	 * saturation to begin with, so it stays exactly white regardless of
-	 * these two. brightness()/contrast() were removed on purpose: they DO
-	 * touch lightness, which was greying out that white glyph. Our own
-	 * Prism logo is excluded entirely since it's not a generic blue asset
-	 * meant to be retinted. */
-	filter: hue-rotate(var(--prism-icon-hue-rotate, 0deg)) saturate(var(--prism-icon-saturate, 1.6));
-}
-
-/* User/navbar dropdown menus (Edit Profile, Toggle Theme, Logout, ...) —
- * themed hover tint and accent-colored icons, applied globally since these
- * are appended near the navbar trigger, not nested inside .navbar itself. */
-.dropdown-menu .dropdown-item:hover,
-.dropdown-menu .dropdown-item:focus {
-	background-color: var(--sidebar-hover-color);
-	color: var(--text-color);
-}
-.dropdown-menu .dropdown-item svg,
-.dropdown-menu .dropdown-item .icon {
-	color: var(--primary);
-}
-
-/* ---------------------------------------------------------------------
- * Document sidebar (Assign / Attachments / Tags / Share rows) and
- * breadcrumbs — themed hover state and accent-colored action icons.
- * --------------------------------------------------------------------- */
-.form-sidebar .sidebar-menu > li > a:hover {
-	color: var(--primary) !important;
-}
-.form-sidebar .sidebar-label {
-	transition: color 0.15s ease;
-}
-.form-sidebar .sidebar-label:hover {
-	color: var(--primary);
-}
-.breadcrumb a:hover,
-.breadcrumb-container a:hover {
-	color: var(--primary) !important;
-}
-
-/* ---------------------------------------------------------------------
- * Toasts/alerts (already contrast-fine via --card-bg, just adding motion
- * consistent with the rest of the app) and grid/child-table row focus.
- * --------------------------------------------------------------------- */
-.alert,
-.toast-message {
-	transition: transform 0.2s ease, opacity 0.2s ease;
-}
-.grid-row.grid-row-selected,
-.grid-static-col.grid-static-col-selected {
-	background-color: var(--sidebar-hover-color) !important;
-}
-.form-grid input.form-control:focus,
-.form-grid select.form-control:focus {
-	border-color: var(--primary) !important;
-	box-shadow: none !important;
-}
-
-/* Frappe's own empty-state "Create your first X" button is hardcoded to
- * .btn-default rather than .btn-primary, so it never picks up theme color
- * without an explicit override like this. */
-.btn.btn-new-doc {
-	background: var(--prism-accent-gradient, var(--btn-primary));
-	color: var(--prism-on-primary, var(--neutral));
-	border: none;
-}
-.btn.btn-new-doc:hover {
-	filter: brightness(1.08);
-}
-
-/* ---------------------------------------------------------------------
- * Icon style variants, toggled via a body class set by prism.bundle.js.
- * --------------------------------------------------------------------- */
-body.prism-icon-outline svg.icon {
-	fill: none !important;
-}
-body.prism-icon-filled svg.icon,
-body.prism-icon-solid-glyph svg.icon {
-	fill: currentColor !important;
-}
-body.prism-icon-two-tone svg.icon {
-	opacity: 0.92;
-}
-body.prism-icon-gradient svg.icon {
-	filter: saturate(1.4);
-}
-
-/* ---------------------------------------------------------------------
- * Generic hover/press utilities available to Prism's own UI (Theme
- * Studio) and reusable anywhere in Desk via class names.
- * --------------------------------------------------------------------- */
-.prism-hover-lift {
-	transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-}
-.prism-hover-lift:hover {
-	transform: translateY(-4px);
-	box-shadow: 0 12px 24px rgba(0, 0, 0, 0.14);
-}
-.prism-hover-glow:hover {
-	box-shadow: 0 0 0 3px var(--sidebar-active-color), 0 0 18px var(--sidebar-hover-color);
-	border-color: var(--primary) !important;
-}
-.prism-press:active {
-	transform: scale(0.97);
-}
-
-/* ---------------------------------------------------------------------
- * Dashboard: Number Cards and Chart widgets get a colored top accent bar
- * and a hover lift, so they read as a current dashboard rather than the
- * flat gray boxes Desk ships by default (spec 3.3).
- * --------------------------------------------------------------------- */
-.widget.new-number-card-widget,
-.widget.new-chart-widget {
+/* Number cards and charts carry the accent along their top edge. */
+body.prism-theme-active .widget.new-number-card-widget,
+body.prism-theme-active .widget.new-chart-widget {
 	position: relative;
 	overflow: hidden;
-	transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.widget.new-number-card-widget::before,
-.widget.new-chart-widget::before {
+body.prism-theme-active .widget.new-number-card-widget::before,
+body.prism-theme-active .widget.new-chart-widget::before {
 	content: "";
 	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
+	inset: 0 0 auto 0;
 	height: 3px;
-	background: var(--prism-accent-gradient, var(--primary));
-}
-.widget.new-number-card-widget:hover,
-.widget.new-chart-widget:hover {
-	transform: translateY(-3px);
-	box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
-}
-.frappe-chart .chart-legend,
-.frappe-chart text {
-	fill: var(--charts-label-color, var(--text-muted));
+	background: var(--prism-accent-gradient);
 }
 
-/* ---------------------------------------------------------------------
- * Badges / indicator pills: Frappe's semantic bg/text pairs (red, green,
- * etc.) already carry their own contrast, so they're left alone. What
- * DOES need auto-contrast is anything painted with the theme's own
- * primary color directly (e.g. a filled indicator using --primary as its
- * background) — this utility class covers that case wherever it's used.
- * --------------------------------------------------------------------- */
-.prism-on-accent {
-	color: var(--prism-on-primary, #fff) !important;
-}
-
-/* ---------------------------------------------------------------------
- * Toasts and modals: contrast-aware chrome, gradient-capable primary
- * actions (inherited from .btn-primary above), soft elevated shadow.
- * --------------------------------------------------------------------- */
-.modal-content {
-	border-radius: var(--border-radius-lg);
-}
-.modal-content .modal-header .modal-title,
-.modal-content .btn-modal-close {
-	transition: color 0.15s ease;
-}
-
-/* Prism doesn't toggle Frappe's own [data-theme="dark"] — it layers custom
- * properties on top instead. Some native popups (modals) reliably stay
- * white regardless of theme; others (page-actions "..." menu, workspace
- * flyouts) inherit a genuinely DARK background from elsewhere in Frappe's
- * own CSS, which then collided with an earlier version of this fix that
- * assumed EVERY .dropdown-menu was stuck light and forced dark text onto
- * it — breaking the ones that were already dark (dark text on dark bg).
- * Rather than guess which case any given instance is, force these
- * transient/system menus to an explicit, guaranteed-readable light chrome
- * — background AND text together, not just text. */
-.dropdown-menu,
-.popover,
-.sidebar-header-menu,
-.frappe-menu,
-.context-menu,
-.awesomplete > ul {
-	background: #ffffff !important;
-	border-color: #e0e0e0 !important;
-	/* Glass field/button styles put backdrop-filter: blur() on their
-	 * trigger element (e.g. the multiselect's .form-control toggle); a
-	 * dropdown opened right next to/over that blurred trigger can show a
-	 * ghosting/bleed-through seam at the overlap even with an opaque
-	 * background, since backdrop-filter samples everything behind the
-	 * element including its own neighbor. Guarantee dropdowns never carry
-	 * any blur themselves, regardless of which style produced it. */
-	backdrop-filter: none !important;
-	-webkit-backdrop-filter: none !important;
-}
-.modal-content,
-.dropdown-menu,
-.popover,
-.sidebar-header-menu,
-.frappe-menu,
-.context-menu,
-.awesomplete > ul {
-	--text-color: #383838;
-	--text-muted: #525252;
-	--icon-stroke: #383838;
-	--ink-gray-9: #171717;
-	--ink-gray-8: #383838;
-	--ink-gray-7: #525252;
-	--ink-gray-6: #7c7c7c;
-	--ink-gray-5: #7c7c7c;
-	--ink-gray-4: #999999;
-	--ink-gray-3: #c7c7c7;
-	--gray-900: #171717;
-	--gray-800: #383838;
-	--gray-700: #525252;
-	--gray-600: #7c7c7c;
-	/* Same leak, different variable family: --control-bg/--fg-color/--bg-color/
-	 * --disabled-control-bg/--subtle-accent/--subtle-fg are set once for the
-	 * (genuinely dark) PAGE background and never reset for light surfaces
-	 * nested inside it — striped table rows, disabled-look inputs, and
-	 * similar sub-elements inside e.g. the "Configure Columns" dialog kept
-	 * the page's dark control/row background while sitting inside an
-	 * otherwise-white modal, with dark text (from the reset above) on top
-	 * of it: unreadable. Reset the surface tokens too, not just text ones. */
-	--control-bg: #f4f5f6;
-	--fg-color: #f7f8fa;
-	--bg-color: #ffffff;
-	--disabled-control-bg: #f4f5f6;
-	--subtle-accent: #f4f5f6;
-	--subtle-fg: #eceef0;
-	--btn-default-hover-bg: #e8eaed;
-	/* --awesomplete-hover-bg: var(--control-bg) is declared ONCE at :root in
-	 * Frappe's own css_variables.scss, so its var() reference already
-	 * resolved against root's (dark) --control-bg before ever reaching this
-	 * subtree — redeclaring --control-bg here doesn't reach it, since
-	 * nothing re-reads --control-bg fresh for this specific chain. Override
-	 * the already-resolved variable directly instead. */
-	--awesomplete-hover-bg: #eceef0;
-	/* `color` inherits as an already-resolved value, not a live var()
-	 * reference — redeclaring the custom properties above does nothing for
-	 * descendant text unless something here also re-reads them to establish
-	 * a fresh inherited value for this subtree. */
-	color: var(--text-color);
-}
-.modal-content .text-muted,
-.dropdown-menu .text-muted,
-.popover .text-muted,
-.sidebar-header-menu .text-muted,
-.frappe-menu .text-muted,
-.context-menu .text-muted {
-	color: var(--text-muted) !important;
-}
-/* App-switcher dropdown (.sidebar-header-menu, frappe/ui/sidebar/sidebar_header.js)
- * and its "Workspaces"/"Display"/"Help" nested flyouts (.frappe-menu.context-menu,
- * a completely separate widget in frappe/ui/menu.js reusing the same item
- * markup) — menu item label/title text doesn't use --text-color at all, it's
- * Bootstrap-default black-on-white normally; the ghost/invisible text
- * happened because .menu-item-title inherits from an ancestor that Prism's
- * global dark-surface CSS touched. */
-.sidebar-header-menu .menu-item-title,
-.sidebar-header-menu .dropdown-menu-item a,
-.frappe-menu .menu-item-title,
-.frappe-menu .dropdown-menu-item a,
-.context-menu .menu-item-title,
-.context-menu .dropdown-menu-item a {
-	color: var(--text-color) !important;
-}
-.sidebar-header-menu .menu-item-shortcut,
-.frappe-menu .menu-item-shortcut,
-.context-menu .menu-item-shortcut {
-	color: var(--text-muted) !important;
-}
-.alert,
-.toast {
-	border-radius: var(--border-radius-md);
-}
-
-/* ---------------------------------------------------------------------
- * KPI / dashboard widget utility classes (used by Theme Studio's own
- * preview UI today; available for future dashboard work). Colors are
- * theme tokens throughout, so these automatically match whatever preset
- * is active rather than being hardcoded to one palette.
- * --------------------------------------------------------------------- */
-.prism-kpi-hero {
-	display: flex;
-	flex-direction: column;
-	gap: 4px;
-}
-.prism-kpi-hero .prism-kpi-value {
-	font-size: 28px;
-	font-weight: 600;
-}
-.prism-kpi-hero .prism-kpi-sub {
-	font-size: 11.5px;
-	color: var(--text-muted);
-}
-.prism-trend-up {
-	color: var(--green-600, #3d9b6e);
-	font-size: 11px;
-	font-weight: 600;
-}
-.prism-trend-down {
-	color: var(--red-600, #b14b3c);
-	font-size: 11px;
-	font-weight: 600;
-}
-.prism-compare-track {
-	flex: 1;
-	height: 8px;
-	background: var(--sidebar-hover-color);
-	border-radius: var(--border-radius-full, 999px);
-	overflow: hidden;
-}
-.prism-compare-fill {
-	height: 100%;
-	border-radius: inherit;
-	background: var(--prism-accent-gradient, var(--primary));
-}
-.prism-leaderboard-row {
-	display: flex;
-	align-items: center;
-	gap: 10px;
-	padding: 7px 0;
-	border-bottom: 1px dashed var(--border-color);
-	font-size: 12px;
-}
-.prism-leaderboard-row:last-child {
-	border-bottom: none;
-}
-.prism-feed-dot {
-	width: 8px;
-	height: 8px;
-	border-radius: 50%;
-	margin-top: 5px;
-	flex-shrink: 0;
-	background: var(--primary);
-}
-
-/* ---------------------------------------------------------------------
- * Motion & polish layer (spec 3.7, scoped to what's safely CSS-only):
- * dropdown/select fade+scale-in, sidebar collapse transition, tactile
- * checkbox toggle, theme-colored scrollbar. Everything here degrades to
- * an instant, functional state under prefers-reduced-motion — no user
- * loses information, they just don't get the flourish.
- * --------------------------------------------------------------------- */
-/* List-view sort dropdown: its toggle <button> carries a transform (tactile
- * press animation), which makes the button its own stacking context, so the
- * menu's z-index:1000 only counts *inside* the button. The list's sticky
- * right-hand column (count / comments / like) comes later in the DOM and was
- * painting over the open menu. Lifting the whole control above the list
- * restores the expected stacking. */
-.sort-selector {
+/* The list sort toggle's transform makes it a stacking context, which traps its
+ * menu under the list's sticky right-hand column. */
+body.prism-theme-active .sort-selector {
 	position: relative;
 	z-index: 20;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-	/* Popper.js positions .dropdown-menu via an inline style.transform
-	 * (translate3d), computed and overwritten after first paint once it
-	 * knows which side has room (it may flip placement, e.g. side -> bottom,
-	 * after an initial guess). Animating `transform` here as well fights
-	 * that inline value: our keyframe's transform gets clobbered mid-animation
-	 * by Popper's reposition, which is what produced the "opens to the side,
-	 * then snaps below" flicker. Fade-in via opacity only -- it doesn't
-	 * touch the property Popper owns. */
-	.dropdown-menu {
-		animation: prism-pop-in 0.15s ease;
-	}
-	@keyframes prism-pop-in {
-		from {
-			opacity: 0;
-		}
-		to {
-			opacity: 1;
-		}
-	}
-
-	.checkbox-input {
-		transition: background-color 0.15s ease, border-color 0.15s ease;
-	}
-
-	.body-sidebar {
-		transition: width 0.2s ease;
-	}
+/* Canvas */
+body.prism-bg-gradient {
+	background: var(--prism-desktop-bg) !important;
+	background-attachment: fixed !important;
+}
+body.prism-bg-gradient .page-head {
+	backdrop-filter: none;
 }
 
-@media (prefers-reduced-motion: reduce) {
-	*,
-	*::before,
-	*::after {
-		animation-duration: 0.001ms !important;
-		transition-duration: 0.001ms !important;
-	}
+/* ERPNext's module icons are one baked blue, so a filter is the only way to retint
+ * them. Matched by path on purpose: third-party app icons and company logos carry
+ * their own brand colours and are left alone. */
+body.prism-theme-active img[src*="/icons/desktop_icons/"] {
+	filter: hue-rotate(var(--prism-icon-hue-rotate, 0deg)) saturate(var(--prism-icon-saturate, 1));
+}
+body.prism-theme-active div.app-icon {
+	background-color: var(--primary) !important;
 }
 
-/* Theme-colored scrollbar (WebKit/Blink; Firefox uses the standard props
- * below). Thin, rounded, tinted to the active accent rather than the
- * browser default — cheap, high-visual-impact per spec 3.7. */
-* {
-	scrollbar-width: thin;
-	scrollbar-color: var(--sidebar-hover-color) transparent;
+/* Icon styles. Frappe 16's icons are stroke-only Lucide glyphs, so a solid fill turns
+ * them into blobs: these only tint the inside or weigh the stroke. */
+body.prism-icon-filled svg.icon {
+	fill: currentColor;
+	fill-opacity: 0.16;
 }
-::-webkit-scrollbar {
-	width: 8px;
-	height: 8px;
+body.prism-icon-solid-glyph svg.icon {
+	stroke-width: 2.1;
 }
-::-webkit-scrollbar-thumb {
-	background: var(--sidebar-hover-color);
-	border-radius: var(--border-radius-full, 999px);
+body.prism-icon-two-tone svg.icon {
+	fill: var(--prism-accent-ink);
+	fill-opacity: 0.22;
 }
-::-webkit-scrollbar-thumb:hover {
-	background: var(--sidebar-active-color);
-}
-::-webkit-scrollbar-track {
-	background: transparent;
+body.prism-icon-gradient svg.icon {
+	fill: var(--prism-accent-ink);
+	fill-opacity: 0.12;
 }
 
 /* ---------------------------------------------------------------------
@@ -978,24 +655,25 @@ body.prism-icon-gradient svg.icon {
  * radius scale). Scoped to the surfaces users actually notice corners on.
  * --------------------------------------------------------------------- */
 body.prism-corner-cut .btn,
+body.prism-corner-cut .es-button,
 body.prism-corner-cut .form-control,
 body.prism-corner-cut .prism-preset-card,
-body.prism-corner-cut .modal-content,
 body.prism-corner-cut .prism-app-override-row {
-	clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+	clip-path: polygon(7px 0, 100% 0, 100% calc(100% - 7px), calc(100% - 7px) 100%, 0 100%, 0 7px);
 }
 body.prism-corner-diamond .btn,
+body.prism-corner-diamond .es-button,
 body.prism-corner-diamond .form-control,
 body.prism-corner-diamond .prism-preset-card,
-body.prism-corner-diamond .modal-content,
 body.prism-corner-diamond .prism-app-override-row {
 	clip-path: polygon(
-		10px 0, calc(100% - 10px) 0, 100% 10px,
-		100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%,
-		0 calc(100% - 10px), 0 10px
+		5px 0, calc(100% - 5px) 0, 100% 5px,
+		100% calc(100% - 5px), calc(100% - 5px) 100%, 5px 100%,
+		0 calc(100% - 5px), 0 5px
 	);
 }
 body.prism-corner-extra-rounded .btn,
+body.prism-corner-extra-rounded .es-button,
 body.prism-corner-extra-rounded .form-control,
 body.prism-corner-extra-rounded .prism-preset-card,
 body.prism-corner-extra-rounded .modal-content,
@@ -1003,6 +681,7 @@ body.prism-corner-extra-rounded .prism-app-override-row {
 	border-radius: 22px !important;
 }
 body.prism-corner-soft-edge .btn,
+body.prism-corner-soft-edge .es-button,
 body.prism-corner-soft-edge .form-control,
 body.prism-corner-soft-edge .prism-preset-card,
 body.prism-corner-soft-edge .modal-content,
@@ -1081,7 +760,7 @@ body.prism-desktop-image-bg .body-sidebar {
 	z-index: 1;
 }
 body.prism-desktop-image-bg .desktop-icon .icon-caption {
-	background: var(--bg-color, rgba(255, 255, 255, 0.85));
+	background: var(--prism-popover);
 	backdrop-filter: blur(4px);
 	-webkit-backdrop-filter: blur(4px);
 	border-radius: var(--border-radius-sm);
@@ -1090,141 +769,31 @@ body.prism-desktop-image-bg .desktop-icon .icon-caption {
 }
 
 /* ---------------------------------------------------------------------
- * Workspace-group flyout / "switch to" module badges (frappe/ui/app_icon.js)
- * hardcode background-color per-module via inline style — entirely
- * independent of theme, unlike the /apps desktop grid icons which at
- * least approximate the theme color via hue-rotate. Force them to the
- * actual theme accent so the same module reads the same color everywhere
- * (sidebar flyout, desktop grid, "switch to" search results, ...).
+ * Motion and scrollbars
  * --------------------------------------------------------------------- */
-div.app-icon {
-	background-color: var(--primary) !important;
+@media (prefers-reduced-motion: no-preference) {
+	/* Opacity only: Popper positions menus through an inline transform. */
+	body.prism-theme-active .dropdown-menu.show {
+		animation: prism-pop-in 0.14s ease;
+	}
+	@keyframes prism-pop-in {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
 }
-
-/* ---------------------------------------------------------------------
- * Disabled/read-only fields (.form-control:disabled/[readonly], the
- * Abbr/Reporting Currency style fields) use Frappe's own
- * --disabled-control-bg/--disabled-text-color, which are fixed light-mode
- * values Prism never touches — a near-white background stays near-white
- * regardless of theme, while the field's actual text color still inherits
- * the page's (light, dark-theme-appropriate) text color, so light-on-
- * near-white goes invisible. Repoint both to Prism's own theme-aware
- * --control-bg/--text-muted instead of Frappe's static light-mode pair.
- * --------------------------------------------------------------------- */
-.form-control:disabled,
-.form-control[readonly],
-.like-disabled-input {
-	background-color: var(--control-bg, var(--disabled-control-bg)) !important;
-	color: var(--text-muted) !important;
-	-webkit-text-fill-color: var(--text-muted);
+@media (prefers-reduced-motion: reduce) {
+	body.prism-theme-active *,
+	body.prism-theme-active *::before,
+	body.prism-theme-active *::after {
+		animation-duration: 0.001ms !important;
+		transition-duration: 0.001ms !important;
+	}
 }
-
-/* --highlight-color/--subtle-fg for dark themes are set in prism.bundle.js
- * (apply_theme), not here — see the comment there for why an OPAQUE
- * blended color is used instead of the rgba() this file used originally,
- * which triggered a real Chromium compositing bug (crisp page content
- * bleeding through a translucent background inside an animated/absolutely
- * positioned dropdown, e.g. the list view sort-selector's active option). */
-
-/* ---------------------------------------------------------------------
- * Global search dialog (frappe.search.SearchDialog, a frappe.ui.Dialog so
- * its .modal-content is already covered above) — the category group-title
- * bars specifically render with a background that isn't part of the
- * standard --control-bg/--subtle-fg family this file already resets,
- * so give them an explicit, guaranteed-readable pairing directly. */
-.global-search-more-group-title,
-.search-sidebar-item {
-	background: transparent !important;
-	color: var(--text-muted) !important;
-}
-.search-sidebar-item.active {
-	background: var(--subtle-fg) !important;
-	color: var(--text-color) !important;
-}
-
-/* ---------------------------------------------------------------------
- * Breadcrumb / page title bar text (e.g. the document name segment after
- * "Home / User / ...") can end up on a specific text-color rule bypassing
- * normal inheritance in some Desk page layouts — force it back to the
- * theme's own text color as a safety net.
- * --------------------------------------------------------------------- */
-.breadcrumb-container,
-.breadcrumb-container a,
-.title-text,
-.page-title .title-text {
-	color: var(--text-color) !important;
-}
-.breadcrumb-container .text-muted {
-	color: var(--text-muted) !important;
-}
-
-/* ---------------------------------------------------------------------
- * Toasts (frappe.show_alert) use fixed light success/info/warning tint
- * backgrounds regardless of theme, same root cause as every other fix in
- * this file — pair them with an explicitly dark, readable text color
- * instead of leaving it to inherit the page's light dark-theme value.
- * --------------------------------------------------------------------- */
-.alert,
-.toast-message,
-#alert-container .alert {
-	color: #1a1a1a !important;
-}
-.alert .text-muted {
-	color: #4a4a4a !important;
-}
-
-/* Breadcrumb: the trailing document-name segment can render at reduced
- * opacity/muted color by design while the page loads — force full theme
- * text color everywhere in the crumb trail so it doesn't get stuck faint. */
-.breadcrumb-container *,
-[data-breadcrumbs] * {
-	color: var(--text-color) !important;
-	opacity: 1 !important;
-}
-
-/* Page-based breadcrumbs (frappe.ui.Page / make_app_page — used by Theme
- * Studio and every custom Page, as opposed to Form/List breadcrumbs) live
- * in the page's own title-area, a SIBLING of .navbar/.body-sidebar, not
- * nested inside either — so Prism's --ink-gray-5 override (scoped to
- * those two containers) never reaches it. It falls back to Frappe's
- * global --ink-gray-5, a fixed mid-gray with no theme awareness, which
- * reads as nearly invisible on a dark page canvas. Force the real,
- * theme-computed text color directly instead of relying on that token. */
-.navbar-breadcrumbs a,
-.navbar-breadcrumbs a:before {
-	color: var(--text-color) !important;
-}
-.navbar-breadcrumbs li:last-child > a {
-	color: var(--text-color) !important;
-	font-weight: 600;
-}
-
-/* ---------------------------------------------------------------------
- * Connections tab "document link" boxes (Access Log, Activity Log, ToDo,
- * ...) hardcode background-color: var(--neutral), a fixed light value
- * unaware of theme, while their label text still inherits the page's
- * (light, dark-theme) text color — light-on-light. Pair both explicitly
- * with theme-aware tokens instead.
- * --------------------------------------------------------------------- */
-.document-link {
-	background-color: var(--control-bg) !important;
-}
-.document-link .badge-link,
-.document-link .report-link,
-.document-link .count {
-	color: var(--text-color) !important;
-}
-
-/* Multiselect/multicheck "Select All / Unselect All" bulk-action bar
- * (frappe/form/controls/multiselect_list.js, multicheck.js) sits inside a
- * .dropdown-menu already reset to a white background above, but its own
- * buttons can still carry a dark hover/default state from elsewhere. */
-.dropdown-menu .bulk-select-options .btn,
-.dropdown-menu .select-all-options,
-.dropdown-menu .clear-selections,
-.dropdown-menu .select-all,
-.dropdown-menu .deselect-all {
-	color: #383838 !important;
-	background: #eceef0 !important;
-	border-color: #d5d8dc !important;
+body.prism-theme-active * {
+	scrollbar-width: thin;
+	scrollbar-color: var(--prism-surface-4) transparent;
 }

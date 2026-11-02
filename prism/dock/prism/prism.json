@@ -1,0 +1,19 @@
+{
+ "app": "prism",
+ "docstatus": 0,
+ "doctype": "Dock",
+ "idx": 0,
+ "name": "prism",
+ "standard": 1,
+ "user": "",
+ "items": [
+  {
+   "added": 0,
+   "hidden": 0,
+   "icon": "palette",
+   "link_to": "Prism",
+   "link_type": "Sidebar",
+   "title": "Prism"
+  }
+ ]
+}

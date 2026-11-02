@@ -3,6 +3,21 @@ import frappe
 OVERRIDE_FIELDS = ["navbar_color", "menu_style", "button_style", "hover_effect", "field_style"]
 
 
+def clear_boot_cache():
+	"""Boot data is cached per user, and the theme is part of it. Without this,
+	everyone keeps the old theme until their cache happens to expire."""
+	frappe.cache.delete_key("bootinfo")
+
+
+def theme_for_boot(theme_name):
+	theme = frappe.get_cached_doc("Theme Preset", theme_name).as_dict()
+	# Keyed by app for a cheap lookup on every route change.
+	theme["app_overrides"] = {
+		row.get("app"): row for row in theme.get("app_color_overrides") or [] if row.get("app")
+	}
+	return theme
+
+
 def extend_bootinfo(bootinfo):
 	settings = frappe.get_single("Theme Settings")
 	if not settings.theming_enabled:
@@ -23,7 +38,7 @@ def extend_bootinfo(bootinfo):
 	if not theme_name:
 		return
 
-	theme = frappe.get_cached_doc("Theme Preset", theme_name).as_dict()
+	theme = theme_for_boot(theme_name)
 	if user_theme:
 		for field in OVERRIDE_FIELDS:
 			if user_theme.get(field):
@@ -36,11 +51,3 @@ def extend_bootinfo(bootinfo):
 	hidden = {row.get("desktop_icon") for row in theme.get("hidden_desktop_icons") or []}
 	if hidden and bootinfo.get("desktop_icons"):
 		bootinfo.desktop_icons = [icon for icon in bootinfo.desktop_icons if icon.get("name") not in hidden]
-
-	# Reshaped app -> override dict (keyed for O(1) lookup client-side on
-	# every route change) instead of the raw child-table row list.
-	theme["app_overrides"] = {
-		row.get("app"): row
-		for row in theme.get("app_color_overrides") or []
-		if row.get("app")
-	}
